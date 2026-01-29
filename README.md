@@ -35,8 +35,8 @@ public final class YourPlugin extends JavaPlugin {
         super(init);
     }
 
-    public boolean isPVP(OfflinePlayer offlinePlayer) {
-        return getEssentials().getUserdata().isPVP(offlinePlayer);
+    public boolean isPVP(PlayerRef playerRef) {
+        return getEssentials().getUserdata().isPVP(playerRef);
     }
 
     public void setPVP(PlayerRef playerRef, boolean value) {
