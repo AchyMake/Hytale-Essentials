@@ -1,0 +1,12 @@
+{
+  "Group": "org.achymake.essentials",
+  "Main": "org.achymake.essentials.Essentials",
+  "Name": "Essentials",
+  "Version": "1.0.0",
+  "IncludesAssetPack": true,
+  "Authors": [
+    {
+      "Name": "AchyMake"
+    }
+  ]
+}
