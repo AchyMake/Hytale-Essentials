@@ -8,7 +8,7 @@ import org.achymake.essentials.handlers.PlayerHandler;
 import org.achymake.essentials.handlers.UniverseHandler;
 import org.achymake.essentials.handlers.VanishHandler;
 
-import java.awt.*;
+import java.awt.Color;
 
 public class PlayerConnect {
     private static Essentials getInstance() {
@@ -25,20 +25,9 @@ public class PlayerConnect {
     }
     public static void onPlayerConnect(PlayerConnectEvent event) {
         var playerRef = event.getPlayerRef();
-        getPlayerHandler().setup(playerRef);
-        if (!getPlayerHandler().hasJoined(playerRef.getUuid())) {
-            event.setWorld(getUniverseHandler().getSpawnWorld());
-            getUniverseHandler().sendAll(Message.join(
-                    Message.raw(playerRef.getUsername()),
-                    Message.raw(" has joined the server for the first time!").color(Color.ORANGE)
-            ));
-        } else if (!getVanishHandler().isVanished(playerRef)) {
-            if (!getVanishHandler().getVanished().isEmpty()) {
-                var hiddenManager = playerRef.getHiddenPlayersManager();
-                var vanished = getVanishHandler().getVanished();
-                vanished.forEach(playerRef1 -> hiddenManager.hidePlayer(playerRef1.getUuid()));
-            }
-            if (PermissionsModule.get().hasPermission(playerRef.getUuid(), "essentials.event.join.message")) {
+        var uuid = playerRef.getUuid();
+        if (getPlayerHandler().hasJoined(uuid)) {
+            if (PermissionsModule.get().hasPermission(uuid, "essentials.event.join.message")) {
                 getUniverseHandler().sendAll(Message.join(
                         Message.raw(playerRef.getUsername() + " "),
                         Message.raw("has joined the Server [").color(Color.ORANGE),
@@ -46,9 +35,17 @@ public class PlayerConnect {
                         Message.raw("]").color(Color.ORANGE)
                 ));
             } else getUniverseHandler().sendAll(Message.join(
-                    Message.raw(playerRef.getUsername() + " "),
-                    Message.raw("has joined the Server").color(Color.GRAY)
+                            Message.raw(playerRef.getUsername() + " "),
+                            Message.raw("has joined the Server").color(Color.GRAY)),
+                    "essentials.event.join.notify");
+            getPlayerHandler().update(playerRef);
+        } else {
+            getPlayerHandler().setup(playerRef);
+            event.setWorld(getUniverseHandler().getSpawnWorld());
+            getUniverseHandler().sendAll(Message.join(
+                    Message.raw(playerRef.getUsername()),
+                    Message.raw(" has joined the server for the first time!").color(Color.ORANGE)
             ));
-        } else getVanishHandler().setVanish(playerRef, true);
+        }
     }
 }

@@ -10,6 +10,7 @@ import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.achymake.essentials.Essentials;
 import org.achymake.essentials.handlers.TeleportHandler;
+import org.achymake.essentials.handlers.UniverseHandler;
 
 import javax.annotation.Nonnull;
 import java.awt.Color;
@@ -21,9 +22,13 @@ public class SpawnCommand extends AbstractPlayerCommand {
     private TeleportHandler getTeleportHandler() {
         return getInstance().getTeleportHandler();
     }
+    private UniverseHandler getUniverseHandler() {
+        return getInstance().getUniverseHandler();
+    }
     public SpawnCommand() {
         super("spawn", "teleports to spawn", false);
         requirePermission("essentials.command.spawn");
+        addUsageVariant(new SpawnOtherCommand());
     }
     @Override
     protected void execute(@Nonnull CommandContext commandContext,
@@ -31,12 +36,12 @@ public class SpawnCommand extends AbstractPlayerCommand {
                            @Nonnull Ref<EntityStore> ref,
                            @Nonnull PlayerRef playerRef,
                            @Nonnull World world) {
-        var message = Message.join(
-                Message.raw("Teleporting to ").color(Color.ORANGE),
-                Message.raw("Spawn")
-        );
-        var spawnTp = getTeleportHandler().getSpawn();
+        var spawnTp = getUniverseHandler().getSpawn();
         if (spawnTp != null) {
+            var message = Message.join(
+                    Message.raw("Teleporting to ").color(Color.ORANGE),
+                    Message.raw("Spawn")
+            );
             getTeleportHandler().teleport(playerRef, spawnTp, message, 3);
         } else playerRef.sendMessage(Message.raw("Seem like spawn has not been set").color(Color.RED));
     }

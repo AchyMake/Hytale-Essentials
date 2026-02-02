@@ -3,8 +3,6 @@ package org.achymake.essentials;
 import com.hypixel.hytale.server.core.event.events.player.*;
 import org.achymake.essentials.commands.*;
 import org.achymake.essentials.handlers.*;
-import org.achymake.essentials.interactions.*;
-import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import org.achymake.essentials.listeners.*;
@@ -16,7 +14,6 @@ public class Essentials extends JavaPlugin {
     private EconomyHandler economyHandler;
     private FileHandler fileHandler;
     private MessageHandler messageHandler;
-    private ModelAssetHandler modelAssetHandler;
     private PlayerHandler playerHandler;
     private RandomHandler randomHandler;
     private ScheduleHandler scheduleHandler;
@@ -33,7 +30,6 @@ public class Essentials extends JavaPlugin {
         economyHandler = new EconomyHandler();
         fileHandler = new FileHandler();
         messageHandler = new MessageHandler();
-        modelAssetHandler = new ModelAssetHandler();
         playerHandler = new PlayerHandler();
         randomHandler = new RandomHandler();
         scheduleHandler = new ScheduleHandler();
@@ -42,7 +38,6 @@ public class Essentials extends JavaPlugin {
         vanishHandler = new VanishHandler();
         getFileHandler().setup();
         commands();
-        codecs();
         events();
     }
     private void commands() {
@@ -54,7 +49,6 @@ public class Essentials extends JavaPlugin {
         commandRegistry.registerCommand(new BedCommand());
         commandRegistry.registerCommand(new DelHomeCommand());
         commandRegistry.registerCommand(new DepositCommand());
-        commandRegistry.registerCommand(new DisguiseCommand());
         commandRegistry.registerCommand(new EconomyCommand());
         commandRegistry.registerCommand(new GMACommand());
         commandRegistry.registerCommand(new GMCCommand());
@@ -63,14 +57,12 @@ public class Essentials extends JavaPlugin {
         commandRegistry.registerCommand(new PayCommand());
         commandRegistry.registerCommand(new PvPCommand());
         commandRegistry.registerCommand(new SetHomeCommand());
-        commandRegistry.registerCommand(new SetSpawnCommand());
         commandRegistry.registerCommand(new SpawnCommand());
         commandRegistry.registerCommand(new StoreCommand());
         commandRegistry.registerCommand(new TPAcceptCommand());
         commandRegistry.registerCommand(new TPACommand());
         commandRegistry.registerCommand(new TPCancelCommand());
         commandRegistry.registerCommand(new TPDenyCommand());
-        commandRegistry.registerCommand(new UndisguiseCommand());
         commandRegistry.registerCommand(new VanishCommand());
         commandRegistry.registerCommand(new WithdrawCommand());
     }
@@ -85,9 +77,6 @@ public class Essentials extends JavaPlugin {
         entityStoreRegistry.registerSystem(new ChangeGameMode());
         entityStoreRegistry.registerSystem(new DamageEvent());
         entityStoreRegistry.registerSystem(new DeathEvent());
-    }
-    private void codecs() {
-        getCodecRegistry(Interaction.CODEC).register("EssentialsCustomInteraction", CustomInteraction.class, CustomInteraction.CODEC);
     }
     public VanishHandler getVanishHandler() {
         return vanishHandler;
@@ -106,9 +95,6 @@ public class Essentials extends JavaPlugin {
     }
     public PlayerHandler getPlayerHandler() {
         return playerHandler;
-    }
-    public ModelAssetHandler getModelAssetHandler() {
-        return modelAssetHandler;
     }
     public MessageHandler getMessageHandler() {
         return messageHandler;

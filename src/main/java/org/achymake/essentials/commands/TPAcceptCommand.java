@@ -38,14 +38,13 @@ public class TPAcceptCommand extends AbstractPlayerCommand {
         if (getTeleportHandler().isInRequest(playerRef)) {
             var requester = getTeleportHandler().getReversed().get(playerRef);
             if (requester != null) {
-                var targetRefWorld = getPlayerRefHandler().getWorld(requester);
-                if (targetRefWorld != null) {
+                var targetWorld = getPlayerRefHandler().getWorld(requester);
+                if (targetWorld != null) {
                     var message = Message.join(
                             Message.raw("Teleporting to ").color(Color.ORANGE),
                             Message.raw(requester.getUsername())
                     );
-                    var tp = getTeleportHandler().createForPlayer(targetRefWorld, requester.getTransform());
-                    getTeleportHandler().teleport(playerRef, tp, message);
+                    getTeleportHandler().teleport(requester, getTeleportHandler().createForPlayer(world, playerRef.getTransform().clone()), message);
                 }
             }
             getTeleportHandler().cancel(playerRef);

@@ -11,7 +11,6 @@ import org.achymake.essentials.Essentials;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -205,6 +204,9 @@ public class PlayerHandler {
                 throw new RuntimeException(e);
             }
         }
+    }
+    public void update(PlayerRef playerRef) {
+        var uuid = playerRef.getUuid();
         try (var writer = getFileHandler().getFileWriter("mods/Essentials/userdata/" + uuid + "/username.json")) {
             getFileHandler().getGson().toJson(new Username(playerRef.getUsername()), writer);
         } catch (IOException e) {

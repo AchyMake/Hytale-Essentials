@@ -6,10 +6,8 @@ import com.hypixel.hytale.server.core.modules.entity.teleport.Teleport;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import org.achymake.essentials.Essentials;
-import org.achymake.essentials.files.Spawn;
 
 import java.awt.Color;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,14 +22,8 @@ public class TeleportHandler {
     private Essentials getInstance() {
         return Essentials.getInstance();
     }
-    private FileHandler getFileHandler() {
-        return getInstance().getFileHandler();
-    }
     private ScheduleHandler getScheduleHandler() {
         return getInstance().getScheduleHandler();
-    }
-    private UniverseHandler getUniverseHandler() {
-        return getInstance().getUniverseHandler();
     }
     public boolean isInRequest(PlayerRef playerRef) {
         return getTPA().containsValue(playerRef) || getTPA().containsKey(playerRef) || getTpScheduled().containsKey(playerRef);
@@ -69,9 +61,9 @@ public class TeleportHandler {
         var ref = playerRef.getReference();
         if (ref == null)return;
         var store = ref.getStore();
-        var playerRefWorld = store.getExternalData().getWorld();
+        var world = store.getExternalData().getWorld();
         playerRef.sendMessage(message);
-        playerRefWorld.execute(() -> store.addComponent(ref, Teleport.getComponentType(), teleport));
+        world.execute(() -> store.addComponent(ref, Teleport.getComponentType(), teleport));
     }
     public void cancel(PlayerRef playerRef) {
         if (getTpScheduled().containsKey(playerRef)) {
@@ -97,23 +89,6 @@ public class TeleportHandler {
     }
     public Teleport createForPlayer(World world, Transform transform) {
         return Teleport.createForPlayer(world, transform);
-    }
-    public Teleport getSpawn() {
-        if (getFileHandler().getFile("mods/Essentials/spawn.json").exists()) {
-            try (var writer = getFileHandler().getFileReader("mods/Essentials/spawn.json")) {
-                var json = getFileHandler().getGson().fromJson(writer, Spawn.class);
-                var world = getUniverseHandler().getWorld(json.WorldName());
-                var posX = json.PosX();
-                var posY = json.PosY();
-                var posZ = json.PosZ();
-                var pitch = json.Pitch();
-                var yaw = json.Yaw();
-                var roll = json.Roll();
-                return Teleport.createForPlayer(world, new Transform(posX, posY, posZ, pitch, yaw, roll));
-            } catch (IOException e) {
-                return null;
-            }
-        } else return null;
     }
     public HashMap<PlayerRef, ScheduledFuture<?>> getTpScheduled() {
         return tpScheduled;

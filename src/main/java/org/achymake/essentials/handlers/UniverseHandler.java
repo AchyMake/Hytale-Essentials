@@ -1,18 +1,17 @@
 package org.achymake.essentials.handlers;
 
-import com.hypixel.hytale.math.vector.Transform;
 import com.hypixel.hytale.math.vector.Vector3d;
 import com.hypixel.hytale.protocol.SoundCategory;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.asset.type.soundevent.config.SoundEvent;
-import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.modules.entity.teleport.Teleport;
+import com.hypixel.hytale.server.core.permissions.PermissionsModule;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
 import com.hypixel.hytale.server.core.universe.world.SoundUtil;
 import com.hypixel.hytale.server.core.universe.world.World;
 import org.achymake.essentials.Essentials;
 import org.achymake.essentials.files.EssentialsConfig;
-import org.achymake.essentials.files.Spawn;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -32,18 +31,6 @@ public class UniverseHandler {
     }
     public Universe getUniverse() {
         return Universe.get();
-    }
-    public World getDefault() {
-        return getUniverse().getDefaultWorld();
-    }
-    public Transform getDefaultSpawn() {
-        var defaultWorld = getDefault();
-        assert defaultWorld != null;
-        var worldConfig = defaultWorld.getWorldConfig();
-        var spawnProvider = worldConfig.getSpawnProvider();
-        assert spawnProvider != null;
-        var worldUUID = worldConfig.getUuid();
-        return spawnProvider.getSpawnPoint(defaultWorld, worldUUID);
     }
     public Collection<World> getWorlds() {
         return getUniverse().getWorlds().values();
@@ -83,13 +70,9 @@ public class UniverseHandler {
         var players = getPlayers();
         if (players.isEmpty())return;
         for (var playerRef : players) {
-            var ref = playerRef.getReference();
-            assert ref != null;
-            var store = ref.getStore();
-            var player = store.getComponent(ref, Player.getComponentType());
-            assert player != null;
-            if (player.hasPermission(permission)) {
-                player.sendMessage(message);
+            var uuid = playerRef.getUuid();
+            if (PermissionsModule.get().hasPermission(uuid, permission)) {
+                playerRef.sendMessage(message);
             }
         }
     }
@@ -98,23 +81,18 @@ public class UniverseHandler {
             var json = getFileHandler().getGson().fromJson(writer, EssentialsConfig.class);
             return getWorld(json.SpawnWorld());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            return null;
         }
     }
-    public void setSpawn(World world, Transform transform) {
-        var worldName = world.getName();
-        var pos = transform.getPosition();
-        var posX = pos.x;
-        var posY = pos.y;
-        var posZ = pos.z;
-        var headRotation = transform.getRotation();
-        var pitch = headRotation.getPitch();
-        var yaw = headRotation.getYaw();
-        var roll = headRotation.getRoll();
-        try (var writer = getInstance().getFileHandler().getFileWriter("mods/Essentials/spawn.json")) {
-            getInstance().getFileHandler().getGson().toJson(new Spawn(worldName, posX, posY, posZ, pitch, yaw, roll), writer);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public Teleport getSpawn() {
+        var world = getSpawnWorld();
+        if (world != null) {
+            var worldConfig = world.getWorldConfig();
+            var spawnProvider = worldConfig.getSpawnProvider();
+            if (spawnProvider != null) {
+                var worldUUID = worldConfig.getUuid();
+                return Teleport.createForPlayer(world, spawnProvider.getSpawnPoint(world, worldUUID));
+            } else return null;
+        } else return null;
     }
 }
