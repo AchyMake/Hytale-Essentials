@@ -11,7 +11,6 @@ public class VanishHandler {
         } else hiddenManager.showPlayer(uuid);
     }
     public boolean isVanished(PlayerRef playerRef) {
-        var hiddenManager = playerRef.getHiddenPlayersManager();
-        return hiddenManager.isPlayerHidden(playerRef.getUuid());
+        return playerRef.getHiddenPlayersManager().isPlayerHidden(playerRef.getUuid());
     }
 }

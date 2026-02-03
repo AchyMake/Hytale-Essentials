@@ -36,7 +36,7 @@ public class DepositOtherCommand extends CommandBase {
         if (target != null) {
             var inventory = target.getInventory();
             var listed = new HashMap<String, Integer>();
-            var coinID = "coin";
+            var coinID = "coins";
             var storage = inventory.getStorage();
             var hotbar = inventory.getHotbar();
             storage.forEach((i, itemStack) -> {

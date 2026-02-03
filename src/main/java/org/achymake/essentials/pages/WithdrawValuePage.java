@@ -73,7 +73,7 @@ public class WithdrawValuePage extends InteractiveCustomUIPage<WithdrawValuePage
                     var formatted = getEconomyHandler().format(entered);
                     if (getEconomyHandler().has(playerRef.getUuid(), entered)) {
                         if (getEconomyHandler().remove(playerRef.getUuid(), entered)) {
-                            player.getInventory().getCombinedHotbarFirst().addItemStack(new ItemStack("Coin", entered));
+                            player.getInventory().getCombinedHotbarFirst().addItemStack(new ItemStack("Coins", entered));
                             player.sendMessage(Message.join(
                                     Message.raw("Bank Manager").color(Color.ORANGE),
                                     Message.raw(": You withdrew "),

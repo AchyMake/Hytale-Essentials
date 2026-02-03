@@ -45,7 +45,6 @@ public class Essentials extends JavaPlugin {
         commandRegistry.registerCommand(new AnnouncementCommand());
         commandRegistry.registerCommand(new BackCommand());
         commandRegistry.registerCommand(new BalanceCommand());
-        commandRegistry.registerCommand(new BankCommand());
         commandRegistry.registerCommand(new BedCommand());
         commandRegistry.registerCommand(new DelHomeCommand());
         commandRegistry.registerCommand(new DepositCommand());
@@ -73,7 +72,6 @@ public class Essentials extends JavaPlugin {
         eventRegistry.registerGlobal(PlayerChatEvent.class, PlayerChat::onPlayerChat);
         eventRegistry.registerGlobal(PlayerConnectEvent.class, PlayerConnect::onPlayerConnect);
         eventRegistry.registerGlobal(PlayerDisconnectEvent.class, PlayerDisconnect::onPlayerDisconnect);
-        eventRegistry.registerGlobal(PlayerSetupConnectEvent.class, PlayerSetupConnect::onPlayerSetupConnect);
         entityStoreRegistry.registerSystem(new ChangeGameMode());
         entityStoreRegistry.registerSystem(new DamageEvent());
         entityStoreRegistry.registerSystem(new DeathEvent());

@@ -1,0 +1,75 @@
+{
+  "TranslationProperties": {
+    "Name": "Coins",
+    "Description": "Currency"
+  },
+  "Categories": [
+    "Items.Tools"
+  ],
+  "BlockType": {
+    "DrawType": "Model",
+    "CustomModel": "Blocks/Dungeons/Treasure_Object.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/Dungeons/Treasure_Pile_Texture.png",
+        "Weight": 1
+      },
+      {
+        "Texture": "Blocks/Dungeons/Treasure_Pile_Texture2.png",
+        "Weight": 1
+      }
+    ],
+    "Flags": {},
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "SoftBlocks",
+        "ItemId": "Coins"
+      }
+    },
+    "BlockParticleSetId": "Metal",
+    "BlockSoundSetId": "Coins",
+    "VariantRotation": "None",
+    "Material": "Solid",
+    "Opacity": "Semitransparent",
+    "RandomRotation": "None",
+    "ParticleColor": "#ffd848",
+    "Particles": [
+      {
+        "SystemId": "Block_Gem_Sparks",
+        "Color": "#ffd893",
+        "TargetEntityPart": "Self",
+        "Scale": 0.75,
+        "PositionOffset": {
+          "X": 0.1,
+          "Y": 0.1,
+          "Z": 0.1
+        }
+      }
+    ],
+    "HitboxType": "Rubble"
+  },
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      358,
+      265,
+      341
+    ],
+    "Translation": [
+      -1,
+      -10
+    ]
+  },
+  "Tags": {
+    "Type": [
+      "Tools"
+    ]
+  },
+  "Icon": "Icons/ItemsGenerated/Deco_Scrap_Treasure.png",
+  "MaxStack": 1000,
+  "Quality": "Common",
+  "DropOnDeath": true,
+  "Model": "Blocks/Dungeons/Trash_Object.blockymodel",
+  "Texture": "Blocks/Dungeons/Treasure_Pile_Texture.png"
+}

@@ -39,7 +39,7 @@ public class DepositCommand extends AbstractPlayerCommand {
         if (player != null) {
             var inventory = player.getInventory();
             var listed = new HashMap<String, Integer>();
-            var coinID = "coin";
+            var coinID = "coins";
             var storage = inventory.getStorage();
             var hotbar = inventory.getHotbar();
             storage.forEach((i, itemStack) -> {

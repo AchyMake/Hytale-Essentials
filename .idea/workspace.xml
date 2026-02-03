@@ -4,34 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="25d84e3f-1910-4f13-bc7b-31b357ffa1d4" name="Changes" comment="rest compilers x2">
+    <list default="true" id="25d84e3f-1910-4f13-bc7b-31b357ffa1d4" name="Changes" comment="minor clean up">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/Essentials.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/Essentials.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/DisguiseCommand.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/DisguiseEntityNamedCommand.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/DisguisePlayerCommand.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/DisguisePlayerNamedCommand.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/SetSpawnCommand.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/SpawnCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/SpawnCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/SpawnOtherCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/SpawnOtherCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/TPAcceptCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/TPAcceptCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/UndisguiseCommand.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/UndisguiseOtherCommand.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/files/Spawn.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/handlers/ModelAssetHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/BankCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/DepositCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/DepositCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/DepositOtherCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/DepositOtherCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/StoreCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/StoreCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/files/EssentialsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/files/EssentialsConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/handlers/FileHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/handlers/FileHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/handlers/PlayerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/handlers/PlayerHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/handlers/TeleportHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/handlers/TeleportHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/handlers/UniverseHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/handlers/UniverseHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/handlers/VanishHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/handlers/VanishHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/interactions/CustomInteraction.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/listeners/PlayerConnect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/listeners/PlayerConnect.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/listeners/PlayerDisconnect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/listeners/PlayerDisconnect.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/pages/DisguiseEntityPage.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/pages/DisguisePlayerPage.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/system/DamageEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/system/DamageEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Common/UI/Custom/Pages/DisguiseEntityPage.ui" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Common/UI/Custom/Pages/DisguisePlayerPage.ui" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/listeners/PlayerSetupConnect.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/pages/WithdrawValuePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/pages/WithdrawValuePage.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -190,7 +176,15 @@
       <option name="project" value="LOCAL" />
       <updated>1769710327167</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="minor clean up">
+      <option name="closed" value="true" />
+      <created>1770032090732</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1770032090732</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -198,6 +192,7 @@
     <MESSAGE value="README.md updated" />
     <MESSAGE value="rest compilers" />
     <MESSAGE value="rest compilers x2" />
-    <option name="LAST_COMMIT_MESSAGE" value="rest compilers x2" />
+    <MESSAGE value="minor clean up" />
+    <option name="LAST_COMMIT_MESSAGE" value="minor clean up" />
   </component>
 </project>

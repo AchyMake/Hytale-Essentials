@@ -156,7 +156,7 @@ public class PlayerHandler {
         } else getPVP().remove(playerRef);
     }
     public boolean isPVP(PlayerRef playerRef) {
-        return getPVP().contains(playerRef);
+        return !getPVP().contains(playerRef);
     }
     public boolean hasJoined(UUID uuid) {
         return getFolder(uuid).exists();
