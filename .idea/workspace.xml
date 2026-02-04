@@ -4,20 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="25d84e3f-1910-4f13-bc7b-31b357ffa1d4" name="Changes" comment="minor clean up">
+    <list default="true" id="25d84e3f-1910-4f13-bc7b-31b357ffa1d4" name="Changes" comment="minor clean up x2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/Essentials.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/Essentials.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/BankCommand.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/DepositCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/DepositCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/DepositOtherCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/DepositOtherCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/StoreCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/StoreCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/files/EssentialsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/files/EssentialsConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/handlers/FileHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/handlers/FileHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/handlers/PlayerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/handlers/PlayerHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/handlers/VanishHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/handlers/VanishHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/listeners/PlayerSetupConnect.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/pages/WithdrawValuePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/pages/WithdrawValuePage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/GMAOtherCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/GMAOtherCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/GMCOtherCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/GMCOtherCommand.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -184,7 +175,15 @@
       <option name="project" value="LOCAL" />
       <updated>1770032090732</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="minor clean up x2">
+      <option name="closed" value="true" />
+      <created>1770124896420</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1770124896420</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -193,6 +192,7 @@
     <MESSAGE value="rest compilers" />
     <MESSAGE value="rest compilers x2" />
     <MESSAGE value="minor clean up" />
-    <option name="LAST_COMMIT_MESSAGE" value="minor clean up" />
+    <MESSAGE value="minor clean up x2" />
+    <option name="LAST_COMMIT_MESSAGE" value="minor clean up x2" />
   </component>
 </project>
