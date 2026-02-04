@@ -94,7 +94,7 @@ public class WithdrawValuePage extends InteractiveCustomUIPage<WithdrawValuePage
             } catch (NumberFormatException e) {
                 player.sendMessage(Message.join(
                         Message.raw("Bank Manager").color(Color.ORANGE),
-                        Message.raw(": Seems like you input string instead of number")
+                        Message.raw(": Seems like you input string instead of integer")
                 ));
                 player.getPageManager().setPage(ref, store, Page.None);
             }
