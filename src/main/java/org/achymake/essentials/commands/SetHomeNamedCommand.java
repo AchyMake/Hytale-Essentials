@@ -17,8 +17,8 @@ import javax.annotation.Nonnull;
 import java.awt.Color;
 
 class SetHomeNamedCommand extends AbstractPlayerCommand {
-    private final RequiredArg<String> value;
     @Nonnull
+    private final RequiredArg<String> value;
     private Essentials getInstance() {
         return Essentials.getInstance();
     }
@@ -36,14 +36,17 @@ class SetHomeNamedCommand extends AbstractPlayerCommand {
                            @Nonnull PlayerRef playerRef,
                            @Nonnull World world) {
         var homeName = value.get(commandContext);
+        var uuid = playerRef.getUuid();
+        var homes = getPlayerHandler().getHomes(uuid);
         var maxHomes = getPlayerHandler().getMaxHomes(playerRef);
-        var homes = getPlayerHandler().getHomes(playerRef.getUuid());
         if (homes.contains(homeName) || maxHomes > homes.size()) {
-            getPlayerHandler().setHome(playerRef, world, homeName);
-            playerRef.sendMessage(Message.join(
-                    Message.raw("You have set a home named ").color(Color.ORANGE),
-                    Message.raw(homeName)
-            ));
+            var transform = playerRef.getTransform();
+            if (getPlayerHandler().setHome(uuid, transform, world, homeName)) {
+                playerRef.sendMessage(Message.join(
+                        Message.raw("You have set a home named ").color(Color.ORANGE),
+                        Message.raw(homeName)
+                ));
+            } else playerRef.sendMessage(Message.raw("Seems like there was an error while saving the file").color(Color.RED));
         } else playerRef.sendMessage(Message.join(
                 Message.raw("You have reached limit of ").color(Color.RED),
                 Message.raw(maxHomes + " "),

@@ -9,7 +9,6 @@ import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 
-
 public class WithdrawOtherCommand extends CommandBase {
     private final RequiredArg<PlayerRef> targetRef;
     public WithdrawOtherCommand() {
@@ -21,10 +20,13 @@ public class WithdrawOtherCommand extends CommandBase {
     protected void executeSync(@NonNullDecl CommandContext commandContext) {
         var targetRef = this.targetRef.get(commandContext);
         var ref = targetRef.getReference();
-        assert ref != null;
-        var target = ref.getStore().getComponent(ref, Player.getComponentType());
-        if (target != null) {
-            target.getPageManager().openCustomPage(ref, ref.getStore(), new WithdrawValuePage(targetRef));
+        if (ref != null && ref.isValid()) {
+            var store = ref.getStore();
+            var target = store.getComponent(ref, Player.getComponentType());
+            if (target != null) {
+                var pageManager = target.getPageManager();
+                pageManager.openCustomPage(ref, store, new WithdrawValuePage(targetRef));
+            }
         }
     }
 }

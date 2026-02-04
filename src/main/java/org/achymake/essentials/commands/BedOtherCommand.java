@@ -18,7 +18,6 @@ import javax.annotation.Nonnull;
 import java.awt.Color;
 
 class BedOtherCommand extends AbstractPlayerCommand {
-    private static final Message MESSAGE_COMMANDS_ERRORS_PLAYER_NOT_IN_WORLD = Message.translation("server.commands.errors.playerNotInWorld");
     @Nonnull
     private final RequiredArg<PlayerRef> playerArg;
     private Essentials getInstance() {
@@ -48,6 +47,6 @@ class BedOtherCommand extends AbstractPlayerCommand {
             );
             Player.getRespawnPosition(targetRef, world.getName(), targetStore).thenAccept(transform ->
                     getTeleportHandler().teleport(playerRef, getTeleportHandler().createForPlayer(world, transform), message));
-        } else commandContext.sendMessage(MESSAGE_COMMANDS_ERRORS_PLAYER_NOT_IN_WORLD);
+        }
     }
 }

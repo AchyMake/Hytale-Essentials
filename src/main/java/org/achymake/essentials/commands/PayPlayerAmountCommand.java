@@ -17,7 +17,6 @@ import javax.annotation.Nonnull;
 import java.awt.Color;
 
 public class PayPlayerAmountCommand extends AbstractPlayerCommand {
-    private static final Message MESSAGE_COMMANDS_ERRORS_PLAYER_NOT_IN_WORLD = Message.translation("server.commands.errors.playerNotInWorld");
     private final RequiredArg<PlayerRef> playerArg;
     @Nonnull
     private final RequiredArg<Integer> integerArg;
@@ -44,9 +43,11 @@ public class PayPlayerAmountCommand extends AbstractPlayerCommand {
         if (targetRef != null && targetRef.isValid()) {
             if (targetPlayerRef != playerRef) {
                 if (amount > 0) {
+                    var uuid = playerRef.getUuid();
+                    var targetUuid = targetPlayerRef.getUuid();
                     var formatted = getEconomyHandler().format(amount);
-                    if (getEconomyHandler().has(playerRef.getUuid(), amount)) {
-                        if (getEconomyHandler().remove(playerRef.getUuid(), amount) && getEconomyHandler().add(targetPlayerRef.getUuid(), amount)) {
+                    if (getEconomyHandler().has(uuid, amount)) {
+                        if (getEconomyHandler().remove(uuid, amount) && getEconomyHandler().add(targetUuid, amount)) {
                             playerRef.sendMessage(Message.join(
                                     Message.raw("You sent ").color(Color.ORANGE),
                                     Message.raw(formatted + " "),
@@ -55,17 +56,16 @@ public class PayPlayerAmountCommand extends AbstractPlayerCommand {
                             ));
                             targetPlayerRef.sendMessage(Message.join(
                                     Message.raw(playerRef.getUsername() + " "),
-                                    Message.raw(" has sent you ").color(Color.ORANGE),
-                                    Message.raw(formatted + " ")
+                                    Message.raw("has sent you ").color(Color.ORANGE),
+                                    Message.raw(formatted)
                             ));
-                        }
+                        } else playerRef.sendMessage(Message.raw("Seems like there was an error while saving the files").color(Color.RED));
                     } else playerRef.sendMessage(Message.join(
                             Message.raw("Seems like you don't have ").color(Color.RED),
-                            Message.raw(formatted + " "),
-                            Message.raw("in your bank").color(Color.RED)
+                            Message.raw(formatted)
                     ));
-                } else playerRef.sendMessage(Message.raw("Seems like you tried to input an inadequate amount").color(Color.RED));
+                } else playerRef.sendMessage(Message.raw("Seems like you were trying to put negative integer").color(Color.RED));
             } else playerRef.sendMessage(Message.raw("Seems like you tried to pay your self").color(Color.RED));
-        } else commandContext.sendMessage(MESSAGE_COMMANDS_ERRORS_PLAYER_NOT_IN_WORLD);
+        }
     }
 }

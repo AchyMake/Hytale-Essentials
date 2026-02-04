@@ -32,7 +32,8 @@ class EconomyAddCommand extends CommandBase {
         var targetRef = this.targetRef.get(commandContext);
         var value = this.integerRequiredArg.get(commandContext);
         if (value > 0) {
-            if (getEconomyHandler().add(targetRef.getUuid(), value)) {
+            var uuid = targetRef.getUuid();
+            if (getEconomyHandler().add(uuid, value)) {
                 commandContext.sendMessage(Message.join(
                         Message.raw("You added ").color(Color.ORANGE),
                         Message.raw(getEconomyHandler().format(value) + " ").color(Color.GREEN),
@@ -42,9 +43,9 @@ class EconomyAddCommand extends CommandBase {
                 ));
                 commandContext.sendMessage(Message.join(
                         Message.raw("New balance ").color(Color.ORANGE),
-                        Message.raw(getEconomyHandler().format(getEconomyHandler().get(targetRef.getUuid())) + " ")
+                        Message.raw(getEconomyHandler().format(getEconomyHandler().get(uuid)))
                 ));
-            }
-        }
+            } else commandContext.sendMessage(Message.raw("Seems like there was an error while saving the file").color(Color.RED));
+        } else commandContext.sendMessage(Message.raw("Seems like you were trying to put a negative integer").color(Color.RED));
     }
 }

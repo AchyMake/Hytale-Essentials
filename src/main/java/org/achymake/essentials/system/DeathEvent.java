@@ -1,9 +1,5 @@
 package org.achymake.essentials.system;
 
-import com.hypixel.hytale.server.core.modules.entity.stamina.StaminaGameplayConfig;
-import com.hypixel.hytale.server.core.modules.entity.stamina.StaminaModule;
-import com.hypixel.hytale.server.core.modules.entity.stamina.StaminaSystems;
-import com.hypixel.hytale.server.core.modules.interaction.interaction.config.client.WieldingInteraction;
 import org.achymake.essentials.Essentials;
 import org.achymake.essentials.handlers.PlayerHandler;
 import org.achymake.essentials.handlers.UniverseHandler;
@@ -75,6 +71,6 @@ public class DeathEvent extends DeathSystems.OnDeathSystem {
                 Message.raw("died from ").color(Color.RED),
                 Message.raw(cause.getId())
         ));
-        getPlayerHandler().setDeath(playerRef, getUniverseHandler().getWorld(playerRef.getWorldUuid()));
+        getPlayerHandler().setDeath(playerRef.getUuid(), playerRef.getTransform(), getUniverseHandler().getWorld(playerRef.getWorldUuid()));
     }
 }

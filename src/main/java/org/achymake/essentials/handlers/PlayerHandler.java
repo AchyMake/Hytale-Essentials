@@ -25,12 +25,6 @@ public class PlayerHandler {
     private UniverseHandler getUniverseHandler() {
         return getInstance().getUniverseHandler();
     }
-    public World getWorld(PlayerRef playerRef) {
-        var ref = playerRef.getReference();
-        if (ref != null) {
-            return ref.getStore().getExternalData().getWorld();
-        } else return null;
-    }
     public File getUserdataFolder() {
         return getFileHandler().getFile("mods/Essentials/userdata");
     }
@@ -43,17 +37,17 @@ public class PlayerHandler {
     public File getHomeFile(UUID uuid, String homeName) {
         return getFileHandler().getFile("mods/Essentials/userdata/" + uuid + "/homes/" + homeName + ".json");
     }
-    public void setDeath(PlayerRef playerRef, World world) {
+    public void setDeath(UUID uuid, Transform transform, World world) {
         var worldName = world.getName();
-        var pos = playerRef.getTransform().getPosition();
+        var pos = transform.getPosition();
         var posX = pos.x;
         var posY = pos.y;
         var posZ = pos.z;
-        var headRotation = playerRef.getHeadRotation();
-        var pitch = headRotation.getPitch();
-        var yaw = headRotation.getYaw();
-        var roll = headRotation.getRoll();
-        try (var writer = getFileHandler().getFileWriter(getFolder(playerRef.getUuid()) + "/death.json")) {
+        var rotation = transform.getRotation();
+        var pitch = rotation.getPitch();
+        var yaw = rotation.getYaw();
+        var roll = rotation.getRoll();
+        try (var writer = getFileHandler().getFileWriter(getFolder(uuid) + "/death.json")) {
             getFileHandler().getGson().toJson(new Death(worldName, posX, posY, posZ, pitch, yaw, roll), writer);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -85,10 +79,11 @@ public class PlayerHandler {
             var player = store.getComponent(ref, Player.getComponentType());
             if (player != null) {
                 try (var reader = getFileHandler().getFileReader("mods/Essentials/config.json")) {
-                    var json = getFileHandler().getGson().fromJson(reader, EssentialsConfig.class).MaxHomes();
-                    for (var string : json.keySet()) {
+                    var json = getFileHandler().getGson().fromJson(reader, EssentialsConfig.class);
+                    var maxHomes = json.MaxHomes();
+                    for (var string : maxHomes.keySet()) {
                         if (player.hasPermission("essentials.command.sethome." + string)) {
-                            listed.add(json.get(string));
+                            listed.add(maxHomes.get(string));
                         }
                     }
                 } catch (IOException e) {
@@ -99,20 +94,21 @@ public class PlayerHandler {
         listed.sort(Integer::compareTo);
         return listed.getLast();
     }
-    public void setHome(PlayerRef playerRef, World world, String homeName) {
+    public boolean setHome(UUID uuid, Transform transform, World world, String homeName) {
         var worldName = world.getName();
-        var pos = playerRef.getTransform().getPosition();
+        var pos = transform.getPosition();
         var posX = pos.x;
         var posY = pos.y;
         var posZ = pos.z;
-        var headRotation = playerRef.getHeadRotation();
-        var pitch = headRotation.getPitch();
-        var yaw = headRotation.getYaw();
-        var roll = headRotation.getRoll();
-        try (var writer = getFileHandler().getFileWriter(getHomesFolder(playerRef.getUuid()) + "/" + homeName + ".json")) {
+        var rotation = transform.getRotation();
+        var pitch = rotation.getPitch();
+        var yaw = rotation.getYaw();
+        var roll = rotation.getRoll();
+        try (var writer = getFileHandler().getFileWriter(getHomesFolder(uuid) + "/" + homeName + ".json")) {
             getFileHandler().getGson().toJson(new SetHome(worldName, posX, posY, posZ, pitch, yaw, roll), writer);
+            return true;
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            return false;
         }
     }
     public boolean homeExists(UUID uuid, String homeName) {
@@ -167,7 +163,7 @@ public class PlayerHandler {
                 var json = getFileHandler().getGson().fromJson(reader, Username.class);
                 return json.Username();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                return null;
             }
         } else return null;
     }
@@ -177,13 +173,15 @@ public class PlayerHandler {
                 var json = getFileHandler().getGson().fromJson(reader, Username.class);
                 return json.Username();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                return null;
             }
         } else return null;
     }
     public void setup(PlayerRef playerRef) {
-        createFolders(playerRef.getUuid());
-        createFiles(playerRef);
+        var uuid = playerRef.getUuid();
+        createFolders(uuid);
+        createAccount(uuid);
+        update(playerRef);
     }
     public void createFolders(UUID uuid) {
         var folder = getFolder(uuid);
@@ -195,14 +193,12 @@ public class PlayerHandler {
             homesFolder.mkdir();
         }
     }
-    public void createFiles(PlayerRef playerRef) {
-        var uuid = playerRef.getUuid();
-        if (!getFileHandler().getFile("mods/Essentials/userdata/" + uuid + "/account.json").exists()) {
-            try (var writer = getFileHandler().getFileWriter("mods/Essentials/userdata/" + uuid + "/account.json")) {
-                getFileHandler().getGson().toJson(new Account(0), writer);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+    public void createAccount(UUID uuid) {
+        if (getFileHandler().getFile("mods/Essentials/userdata/" + uuid + "/account.json").exists())return;
+        try (var writer = getFileHandler().getFileWriter("mods/Essentials/userdata/" + uuid + "/account.json")) {
+            getFileHandler().getGson().toJson(new Account(0), writer);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
     public void update(PlayerRef playerRef) {

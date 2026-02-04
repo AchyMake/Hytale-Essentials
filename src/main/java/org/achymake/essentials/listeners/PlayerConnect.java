@@ -6,7 +6,6 @@ import com.hypixel.hytale.server.core.permissions.PermissionsModule;
 import org.achymake.essentials.Essentials;
 import org.achymake.essentials.handlers.PlayerHandler;
 import org.achymake.essentials.handlers.UniverseHandler;
-import org.achymake.essentials.handlers.VanishHandler;
 
 import java.awt.Color;
 
@@ -16,9 +15,6 @@ public class PlayerConnect {
     }
     private static PlayerHandler getPlayerHandler() {
         return getInstance().getPlayerHandler();
-    }
-    private static VanishHandler getVanishHandler() {
-        return getInstance().getVanishHandler();
     }
     private static UniverseHandler getUniverseHandler() {
         return getInstance().getUniverseHandler();

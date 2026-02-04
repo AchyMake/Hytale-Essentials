@@ -12,7 +12,7 @@ import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
-import java.awt.*;
+import java.awt.Color;
 
 public class PvPCommand extends AbstractPlayerCommand {
     private Essentials getInstance() {

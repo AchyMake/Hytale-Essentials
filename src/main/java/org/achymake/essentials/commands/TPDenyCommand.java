@@ -38,13 +38,13 @@ public class TPDenyCommand extends AbstractPlayerCommand {
                     Message.raw(targetRef.getUsername() + " "),
                     Message.raw("teleport request!").color(Color.ORANGE)
             ));
-            if (targetRef != null && targetRef.isValid()) {
+            if (targetRef.isValid()) {
                 targetRef.sendMessage(Message.join(
                         Message.raw(playerRef.getUsername() + " "),
                         Message.raw("denied your teleport request!").color(Color.ORANGE)
                 ));
             }
             getTeleportHandler().cancel(playerRef);
-        }
+        } else playerRef.sendMessage(Message.raw("Seems like you don't have any teleport request").color(Color.RED));
     }
 }

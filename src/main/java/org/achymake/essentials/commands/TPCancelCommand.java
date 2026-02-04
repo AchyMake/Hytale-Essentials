@@ -37,10 +37,10 @@ public class TPCancelCommand extends AbstractPlayerCommand {
             if (targetRef != null && targetRef.isValid()) {
                 targetRef.sendMessage(Message.join(
                         Message.raw(playerRef.getUsername() + " "),
-                        Message.raw("canceled your teleport request!").color(Color.ORANGE)
+                        Message.raw("canceled teleport request!").color(Color.ORANGE)
                 ));
             }
             getTeleportHandler().cancel(playerRef);
-        }
+        } else playerRef.sendMessage(Message.raw("Seems like you don't have any teleport request").color(Color.RED));
     }
 }

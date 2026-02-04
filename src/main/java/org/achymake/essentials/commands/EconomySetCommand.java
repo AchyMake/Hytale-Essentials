@@ -31,7 +31,8 @@ class EconomySetCommand extends CommandBase {
     protected void executeSync(@NonNullDecl CommandContext commandContext) {
         var targetRef = this.targetRef.get(commandContext);
         var value = this.integerRequiredArg.get(commandContext);
-        if (getEconomyHandler().set(targetRef.getUuid(), value)) {
+        var uuid = targetRef.getUuid();
+        if (getEconomyHandler().set(uuid, value)) {
             commandContext.sendMessage(Message.join(
                     Message.raw("You set ").color(Color.ORANGE),
                     Message.raw(getEconomyHandler().format(value) + " ").color(Color.GREEN),
@@ -39,6 +40,6 @@ class EconomySetCommand extends CommandBase {
                     Message.raw(targetRef.getUsername()),
                     Message.raw("'s account").color(Color.ORANGE)
             ));
-        }
+        } else commandContext.sendMessage(Message.raw("Seems like there was an error while saving the file").color(Color.RED));
     }
 }

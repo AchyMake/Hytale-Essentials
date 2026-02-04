@@ -28,12 +28,13 @@ public class EconomyResetCommand extends CommandBase {
     @Override
     protected void executeSync(@NonNullDecl CommandContext commandContext) {
         var targetRef = this.targetRef.get(commandContext);
-        if (getEconomyHandler().set(targetRef.getUuid(), 0)) {
+        var uuid = targetRef.getUuid();
+        if (getEconomyHandler().set(uuid, 0)) {
             commandContext.sendMessage(Message.join(
                     Message.raw("You reset ").color(Color.ORANGE),
                     Message.raw(targetRef.getUsername()),
                     Message.raw("'s account").color(Color.ORANGE)
             ));
-        }
+        } else commandContext.sendMessage(Message.raw("Seems like there was an error while saving the file").color(Color.RED));
     }
 }

@@ -13,15 +13,14 @@ import javax.annotation.Nonnull;
 import java.awt.Color;
 
 class VanishOtherCommand extends CommandBase {
+    @Nonnull
+    private final RequiredArg<PlayerRef> playerArg;
     private Essentials getInstance() {
         return Essentials.getInstance();
     }
     private VanishHandler getVanishHandler() {
         return getInstance().getVanishHandler();
     }
-    private static final Message MESSAGE_COMMANDS_ERRORS_PLAYER_NOT_IN_WORLD = Message.translation("server.commands.errors.playerNotInWorld");
-    @Nonnull
-    private final RequiredArg<PlayerRef> playerArg;
     VanishOtherCommand() {
         super("vanish other player");
         playerArg = withRequiredArg("player", "server.commands.argtype.player.desc", ArgTypes.PLAYER_REF);
@@ -45,6 +44,6 @@ class VanishOtherCommand extends CommandBase {
                         Message.raw(" is no longer vanished from players").color(Color.ORANGE)
                 ));
             }
-        } else commandContext.sendMessage(MESSAGE_COMMANDS_ERRORS_PLAYER_NOT_IN_WORLD);
+        }
     }
 }

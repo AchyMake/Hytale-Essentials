@@ -1,20 +1,18 @@
 package org.achymake.essentials.commands;
 
 import com.hypixel.hytale.server.core.Message;
-import com.hypixel.hytale.server.core.command.system.AbstractCommand;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.arguments.system.RequiredArg;
 import com.hypixel.hytale.server.core.command.system.arguments.types.ArgTypes;
+import com.hypixel.hytale.server.core.command.system.basecommands.CommandBase;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import org.achymake.essentials.Essentials;
 import org.achymake.essentials.handlers.EconomyHandler;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
-import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
 import java.awt.Color;
-import java.util.concurrent.CompletableFuture;
 
-public class BalanceOtherCommand extends AbstractCommand {
+public class BalanceOtherCommand extends CommandBase {
     private Essentials getInstance() {
         return Essentials.getInstance();
     }
@@ -27,16 +25,17 @@ public class BalanceOtherCommand extends AbstractCommand {
         targetRef = withRequiredArg("player", "server.commands.argtype.string.desc", ArgTypes.PLAYER_REF);
         requirePermission("essentials.command.balance.other");
     }
-    @NullableDecl
     @Override
-    protected CompletableFuture<Void> execute(@NonNullDecl CommandContext commandContext) {
+    protected void executeSync(@NonNullDecl CommandContext commandContext) {
         var targetRef = this.targetRef.get(commandContext);
-        var account = getEconomyHandler().get(targetRef.getUuid());
-        commandContext.sendMessage(Message.join(
-                Message.raw(targetRef.getUsername() + " "),
-                Message.raw("has ").color(Color.ORANGE),
-                Message.raw(getEconomyHandler().format(account))
-        ));
-        return null;
+        if (targetRef != null && targetRef.isValid()) {
+            var uuid = targetRef.getUuid();
+            var account = getEconomyHandler().get(uuid);
+            commandContext.sendMessage(Message.join(
+                    Message.raw(targetRef.getUsername() + " "),
+                    Message.raw("has ").color(Color.ORANGE),
+                    Message.raw(getEconomyHandler().format(account))
+            ));
+        }
     }
 }

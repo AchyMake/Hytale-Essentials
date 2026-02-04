@@ -42,26 +42,25 @@ public class WithdrawAmountCommand extends AbstractPlayerCommand {
         var player = store.getComponent(ref, Player.getComponentType());
         if (player != null) {
             if (amount > 0 && 1000 >= amount) {
+                var uuid = playerRef.getUuid();
                 var formatted = getEconomyHandler().format(amount);
-                if (getEconomyHandler().has(playerRef.getUuid(), amount)) {
-                    if (getEconomyHandler().remove(playerRef.getUuid(), amount)) {
-                        player.getInventory().getCombinedHotbarFirst().addItemStack(new ItemStack("Coin", amount));
-                        player.sendMessage(Message.join(
-                                Message.raw("You withdraw ").color(Color.ORANGE),
-                                Message.raw(formatted + " "),
-                                Message.raw("from bank").color(Color.ORANGE)
+                if (getEconomyHandler().has(uuid, amount)) {
+                    if (getEconomyHandler().remove(uuid, amount)) {
+                        player.getInventory().getCombinedHotbarFirst().addItemStack(new ItemStack("Coins", amount));
+                        playerRef.sendMessage(Message.join(
+                                Message.raw("You withdrew ").color(Color.ORANGE),
+                                Message.raw(formatted)
                         ));
-                        commandContext.sendMessage(Message.join(
+                        playerRef.sendMessage(Message.join(
                                 Message.raw("New balance ").color(Color.ORANGE),
-                                Message.raw(getEconomyHandler().format(getEconomyHandler().get(playerRef.getUuid())))
+                                Message.raw(getEconomyHandler().format(getEconomyHandler().get(uuid)))
                         ));
-                    }
-                } else player.sendMessage(Message.join(
+                    } else playerRef.sendMessage(Message.raw("Seems like there was an error while saving the file").color(Color.RED));
+                } else playerRef.sendMessage(Message.join(
                         Message.raw("Seems like you don't have ").color(Color.RED),
-                        Message.raw(formatted + " "),
-                        Message.raw("in your bank").color(Color.RED)
+                        Message.raw(formatted)
                 ));
-            } else player.sendMessage(Message.raw("Seems like you tried to input an inadequate amount").color(Color.RED));
+            } else playerRef.sendMessage(Message.raw("Seems like you tried to input an inadequate amount").color(Color.RED));
         }
     }
 }

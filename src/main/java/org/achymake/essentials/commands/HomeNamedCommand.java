@@ -15,11 +15,11 @@ import org.achymake.essentials.handlers.PlayerHandler;
 import org.achymake.essentials.handlers.TeleportHandler;
 
 import javax.annotation.Nonnull;
-import java.awt.*;
+import java.awt.Color;
 
 class HomeNamedCommand extends AbstractPlayerCommand {
-    private final RequiredArg<String> value;
     @Nonnull
+    private final RequiredArg<String> value;
     private Essentials getInstance() {
         return Essentials.getInstance();
     }
@@ -41,7 +41,8 @@ class HomeNamedCommand extends AbstractPlayerCommand {
                            @Nonnull PlayerRef playerRef,
                            @Nonnull World world) {
         var homeName = value.get(commandContext);
-        var homeTP = getPlayerHandler().getHome(playerRef.getUuid(), homeName);
+        var uuid = playerRef.getUuid();
+        var homeTP = getPlayerHandler().getHome(uuid, homeName);
         if (homeTP != null) {
             var message = Message.join(
                     Message.raw("Teleporting to ").color(Color.ORANGE),

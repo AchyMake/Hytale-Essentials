@@ -30,10 +30,11 @@ public class HomesCommand extends AbstractPlayerCommand {
                            @Nonnull Ref<EntityStore> ref,
                            @Nonnull PlayerRef playerRef,
                            @Nonnull World world) {
-        var homeList = getPlayerHandler().getHomes(playerRef.getUuid());
+        var uuid = playerRef.getUuid();
+        var homeList = getPlayerHandler().getHomes(uuid);
         if (!homeList.isEmpty()) {
             playerRef.sendMessage(Message.raw("Homes:").color(Color.ORANGE));
-            for (var homes : getPlayerHandler().getHomes(playerRef.getUuid())) {
+            for (var homes : homeList) {
                 playerRef.sendMessage(Message.raw("- " + homes));
             }
         } else playerRef.sendMessage(Message.raw("Seems like you haven't set any homes yet").color(Color.RED));

@@ -34,10 +34,11 @@ public class BalanceCommand extends AbstractPlayerCommand {
                            @Nonnull Ref<EntityStore> ref,
                            @Nonnull PlayerRef playerRef,
                            @Nonnull World world) {
-        var amount = getEconomyHandler().get(playerRef.getUuid());
-        commandContext.sendMessage(Message.join(
+        var uuid = playerRef.getUuid();
+        var account = getEconomyHandler().get(uuid);
+        playerRef.sendMessage(Message.join(
                 Message.raw("Balance").color(Color.ORANGE),
-                Message.raw(": " + getEconomyHandler().format(amount))
+                Message.raw(": " + getEconomyHandler().format(account))
         ));
     }
 }

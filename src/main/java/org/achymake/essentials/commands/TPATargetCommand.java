@@ -19,7 +19,6 @@ import java.awt.Color;
 import java.util.concurrent.TimeUnit;
 
 class TPATargetCommand extends AbstractPlayerCommand {
-    private static final Message MESSAGE_COMMANDS_ERRORS_PLAYER_NOT_IN_WORLD = Message.translation("server.commands.errors.playerNotInWorld");
     @Nonnull
     private final RequiredArg<PlayerRef> playerArg;
     private Essentials getInstance() {
@@ -83,6 +82,6 @@ class TPATargetCommand extends AbstractPlayerCommand {
                     } else playerRef.sendMessage(Message.raw("Seems like the player does not accept any tp requests").color(Color.RED));
                 } else playerRef.sendMessage(Message.raw("Seems like you already are in a request").color(Color.RED));
             } else playerRef.sendMessage(Message.raw("Seems like you tried to sent request to your self").color(Color.RED));
-        } else commandContext.sendMessage(MESSAGE_COMMANDS_ERRORS_PLAYER_NOT_IN_WORLD);
+        }
     }
 }

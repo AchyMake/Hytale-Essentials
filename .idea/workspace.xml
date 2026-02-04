@@ -4,11 +4,36 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="25d84e3f-1910-4f13-bc7b-31b357ffa1d4" name="Changes" comment="minor clean up x2">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="25d84e3f-1910-4f13-bc7b-31b357ffa1d4" name="Changes" comment="fixed gmc target and gma target added world.execute">
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/GMAOtherCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/GMAOtherCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/GMCOtherCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/GMCOtherCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/BackCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/BackCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/BalanceCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/BalanceCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/BalanceOtherCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/BalanceOtherCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/BalanceTopCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/BalanceTopCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/BedOtherCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/BedOtherCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/EconomyAddCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/EconomyAddCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/EconomyRemoveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/EconomyRemoveCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/EconomyResetCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/EconomyResetCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/EconomySetCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/EconomySetCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/HomeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/HomeCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/HomeNamedCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/HomeNamedCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/HomesCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/HomesCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/PayPlayerAmountCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/PayPlayerAmountCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/PvPCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/PvPCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/SetHomeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/SetHomeCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/SetHomeNamedCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/SetHomeNamedCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/StoreCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/StoreCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/TPATargetCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/TPATargetCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/TPAcceptCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/TPAcceptCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/TPCancelCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/TPCancelCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/TPDenyCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/TPDenyCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/VanishOtherCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/VanishOtherCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/WithdrawAmountCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/WithdrawAmountCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/WithdrawCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/WithdrawCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/WithdrawOtherCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/WithdrawOtherCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/handlers/PlayerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/handlers/PlayerHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/listeners/PlayerConnect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/listeners/PlayerConnect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/system/DeathEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/system/DeathEvent.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -183,7 +208,15 @@
       <option name="project" value="LOCAL" />
       <updated>1770124896420</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="fixed gmc target and gma target added world.execute">
+      <option name="closed" value="true" />
+      <created>1770205329208</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1770205329208</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -193,6 +226,7 @@
     <MESSAGE value="rest compilers x2" />
     <MESSAGE value="minor clean up" />
     <MESSAGE value="minor clean up x2" />
-    <option name="LAST_COMMIT_MESSAGE" value="minor clean up x2" />
+    <MESSAGE value="fixed gmc target and gma target added world.execute" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed gmc target and gma target added world.execute" />
   </component>
 </project>

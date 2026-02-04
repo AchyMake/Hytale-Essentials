@@ -9,8 +9,8 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.achymake.essentials.Essentials;
-import org.achymake.essentials.handlers.PlayerHandler;
 import org.achymake.essentials.handlers.TeleportHandler;
+import org.achymake.essentials.handlers.UniverseHandler;
 
 import javax.annotation.Nonnull;
 import java.awt.Color;
@@ -19,8 +19,8 @@ public class TPAcceptCommand extends AbstractPlayerCommand {
     private Essentials getInstance() {
         return Essentials.getInstance();
     }
-    private PlayerHandler getPlayerRefHandler() {
-        return getInstance().getPlayerHandler();
+    private UniverseHandler getUniverseHandler() {
+        return getInstance().getUniverseHandler();
     }
     private TeleportHandler getTeleportHandler() {
         return getInstance().getTeleportHandler();
@@ -38,7 +38,7 @@ public class TPAcceptCommand extends AbstractPlayerCommand {
         if (getTeleportHandler().isInRequest(playerRef)) {
             var requester = getTeleportHandler().getReversed().get(playerRef);
             if (requester != null) {
-                var targetWorld = getPlayerRefHandler().getWorld(requester);
+                var targetWorld = getUniverseHandler().getWorld(requester.getWorldUuid());
                 if (targetWorld != null) {
                     var message = Message.join(
                             Message.raw("Teleporting to ").color(Color.ORANGE),

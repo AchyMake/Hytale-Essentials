@@ -24,6 +24,10 @@ public class WithdrawCommand extends AbstractPlayerCommand {
                            @Nonnull Ref<EntityStore> ref,
                            @Nonnull PlayerRef playerRef,
                            @Nonnull World world) {
-        store.getComponent(ref, Player.getComponentType()).getPageManager().openCustomPage(ref, store, new WithdrawValuePage(playerRef));
+        var player = store.getComponent(ref, Player.getComponentType());
+        if (player != null) {
+            var pageManager = player.getPageManager();
+            pageManager.openCustomPage(ref, store, new WithdrawValuePage(playerRef));
+        }
     }
 }

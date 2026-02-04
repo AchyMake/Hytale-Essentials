@@ -32,8 +32,9 @@ class EconomyRemoveCommand extends CommandBase {
         var targetRef = this.targetRef.get(commandContext);
         var value = this.integerRequiredArg.get(commandContext);
         if (value > 0) {
-            if (getEconomyHandler().has(targetRef.getUuid(), value)) {
-                if (getEconomyHandler().remove(targetRef.getUuid(), value)) {
+            var uuid = targetRef.getUuid();
+            if (getEconomyHandler().has(uuid, value)) {
+                if (getEconomyHandler().remove(uuid, value)) {
                     commandContext.sendMessage(Message.join(
                             Message.raw("You removed ").color(Color.ORANGE),
                             Message.raw(getEconomyHandler().format(value) + " ").color(Color.RED),
@@ -43,10 +44,10 @@ class EconomyRemoveCommand extends CommandBase {
                     ));
                     commandContext.sendMessage(Message.join(
                             Message.raw("New balance ").color(Color.ORANGE),
-                            Message.raw(getEconomyHandler().format(getEconomyHandler().get(targetRef.getUuid())) + " ")
+                            Message.raw(getEconomyHandler().format(getEconomyHandler().get(uuid)))
                     ));
-                }
+                } else commandContext.sendMessage(Message.raw("Seems like there was an error while saving the file").color(Color.RED));
             } else commandContext.sendMessage(Message.raw("Seems like result would be negative").color(Color.RED));
-        }
+        } else commandContext.sendMessage(Message.raw("Seems like you were trying to put a negative integer").color(Color.RED));
     }
 }

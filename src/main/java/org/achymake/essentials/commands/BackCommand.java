@@ -13,7 +13,7 @@ import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
-import java.awt.*;
+import java.awt.Color;
 
 public class BackCommand extends AbstractPlayerCommand {
     private Essentials getInstance() {
@@ -35,12 +35,14 @@ public class BackCommand extends AbstractPlayerCommand {
                            @Nonnull Ref<EntityStore> ref,
                            @Nonnull PlayerRef playerRef,
                            @Nonnull World world) {
-        var deathTP = getPlayerHandler().getDeath(playerRef.getUuid());
+        var uuid = playerRef.getUuid();
+        var deathTP = getPlayerHandler().getDeath(uuid);
         if (deathTP != null) {
-            getTeleportHandler().teleport(playerRef, deathTP, Message.join(
+            var message = Message.join(
                     Message.raw("Teleporting to ").color(Color.ORANGE),
                     Message.raw("Death Location")
-            ), 3);
+            );
+            getTeleportHandler().teleport(playerRef, deathTP, message, 3);
         } else playerRef.sendMessage(Message.raw("Seems like your death location doesn't exist").color(Color.RED));
     }
 }
