@@ -11,8 +11,6 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.achymake.essentials.Essentials;
-import org.achymake.essentials.handlers.FileHandler;
-import org.achymake.essentials.handlers.PlayerHandler;
 
 import javax.annotation.Nonnull;
 import java.awt.Color;
@@ -22,12 +20,6 @@ class DelHomeNamedCommand extends AbstractPlayerCommand {
     @Nonnull
     private Essentials getInstance() {
         return Essentials.getInstance();
-    }
-    private FileHandler getFileHandler() {
-        return getInstance().getFileHandler();
-    }
-    private PlayerHandler getPlayerHandler() {
-        return getInstance().getPlayerHandler();
     }
     DelHomeNamedCommand() {
         super("deletes named home");
@@ -40,17 +32,19 @@ class DelHomeNamedCommand extends AbstractPlayerCommand {
                            @Nonnull PlayerRef playerRef,
                            @Nonnull World world) {
         var homeName = value.get(commandContext);
-        var uuid = playerRef.getUuid();
-        if (getPlayerHandler().homeExists(uuid, homeName)) {
-            getFileHandler().deleteFile(getPlayerHandler().getHomeFile(uuid, homeName));
-            playerRef.sendMessage(Message.join(
-                    Message.raw("You have deleted a home named ").color(Color.ORANGE),
-                    Message.raw(homeName)
+        var homes = store.getComponent(ref, getInstance().getHomesComponentType());
+        if (homes != null) {
+            if (homes.exists(homeName)) {
+                homes.delHome(homeName);
+                playerRef.sendMessage(Message.join(
+                        Message.raw("You have deleted a home named ").color(Color.ORANGE),
+                        Message.raw(homeName)
+                ));
+            } else playerRef.sendMessage(Message.join(
+                    Message.raw("Seems like you haven't set ").color(Color.RED),
+                    Message.raw(homeName + " "),
+                    Message.raw("as home yet").color(Color.RED)
             ));
-        } else playerRef.sendMessage(Message.join(
-                Message.raw("Seems like you haven't set ").color(Color.RED),
-                Message.raw(homeName + " "),
-                Message.raw("as home yet").color(Color.RED)
-        ));
+        } else playerRef.sendMessage(Message.raw("Seems like you do not have Homes Component").color(Color.RED));
     }
 }

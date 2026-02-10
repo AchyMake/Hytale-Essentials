@@ -1,7 +1,7 @@
 package org.achymake.essentials.system;
 
 import org.achymake.essentials.Essentials;
-import org.achymake.essentials.handlers.PlayerHandler;
+import org.achymake.essentials.components.Death;
 import org.achymake.essentials.handlers.UniverseHandler;
 import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.Ref;
@@ -22,9 +22,6 @@ import java.util.Objects;
 public class DeathEvent extends DeathSystems.OnDeathSystem {
     private Essentials getInstance() {
         return Essentials.getInstance();
-    }
-    private PlayerHandler getPlayerHandler() {
-        return getInstance().getPlayerHandler();
     }
     private UniverseHandler getUniverseHandler() {
         return getInstance().getUniverseHandler();
@@ -71,6 +68,13 @@ public class DeathEvent extends DeathSystems.OnDeathSystem {
                 Message.raw("died from ").color(Color.RED),
                 Message.raw(cause.getId())
         ));
-        getPlayerHandler().setDeath(playerRef.getUuid(), playerRef.getTransform(), getUniverseHandler().getWorld(playerRef.getWorldUuid()));
+        var death = (Death) store.getComponent(ref, getInstance().getDeathComponentType());
+        if (death != null) {
+            var pos = playerRef.getTransform().getPosition();
+            death.setWorldName(getUniverseHandler().getWorld(playerRef.getWorldUuid()).getName());
+            death.setX(pos.x);
+            death.setY(pos.y);
+            death.setZ(pos.z);
+        }
     }
 }

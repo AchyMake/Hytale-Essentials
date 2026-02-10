@@ -1,18 +1,20 @@
 package org.achymake.essentials.handlers;
 
+import com.hypixel.hytale.logger.HytaleLogger;
+import com.hypixel.hytale.server.core.entity.nameplate.Nameplate;
+import com.hypixel.hytale.server.core.permissions.PermissionsModule;
+import com.hypixel.hytale.server.core.universe.Universe;
+import org.achymake.essentials.components.Account;
+import org.achymake.essentials.components.Death;
+import org.achymake.essentials.components.Homes;
 import org.achymake.essentials.files.*;
-import com.hypixel.hytale.math.vector.Transform;
-import com.hypixel.hytale.server.core.entity.entities.Player;
-import com.hypixel.hytale.server.core.modules.entity.teleport.Teleport;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
-import com.hypixel.hytale.server.core.universe.world.World;
 import org.achymake.essentials.Essentials;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 public class PlayerHandler {
     private final ArrayList<PlayerRef> PVP = new ArrayList<>();
@@ -22,129 +24,22 @@ public class PlayerHandler {
     private FileHandler getFileHandler() {
         return getInstance().getFileHandler();
     }
-    private UniverseHandler getUniverseHandler() {
-        return getInstance().getUniverseHandler();
-    }
-    public File getUserdataFolder() {
-        return getFileHandler().getFile("mods/Essentials/userdata");
-    }
-    public File getFolder(UUID uuid) {
-        return getFileHandler().getFile("mods/Essentials/userdata/" + uuid);
-    }
-    public File getHomesFolder(UUID uuid) {
-        return getFileHandler().getFile("mods/Essentials/userdata/" + uuid + "/homes");
-    }
-    public File getHomeFile(UUID uuid, String homeName) {
-        return getFileHandler().getFile("mods/Essentials/userdata/" + uuid + "/homes/" + homeName + ".json");
-    }
-    public void setDeath(UUID uuid, Transform transform, World world) {
-        var worldName = world.getName();
-        var pos = transform.getPosition();
-        var posX = pos.x;
-        var posY = pos.y;
-        var posZ = pos.z;
-        var rotation = transform.getRotation();
-        var pitch = rotation.getPitch();
-        var yaw = rotation.getYaw();
-        var roll = rotation.getRoll();
-        try (var writer = getFileHandler().getFileWriter(getFolder(uuid) + "/death.json")) {
-            getFileHandler().getGson().toJson(new Death(worldName, posX, posY, posZ, pitch, yaw, roll), writer);
+    public int getMaxHomes(PlayerRef playerRef) {
+        var listed = new ArrayList<Integer>();
+        var uuid = playerRef.getUuid();
+        try (var reader = getFileHandler().getFileReader("mods/Essentials/config.json")) {
+            var json = getFileHandler().getGson().fromJson(reader, EssentialsConfig.class);
+            var maxHomes = json.MaxHomes();
+            for (var string : maxHomes.keySet()) {
+                if (PermissionsModule.get().hasPermission(uuid, "essentials.command.sethome." + string)) {
+                    listed.add(maxHomes.get(string));
+                }
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-    public Teleport getDeath(UUID uuid) {
-        var deathFile = getFileHandler().getFile(getFolder(uuid) + "/death.json");
-        if (deathFile.exists()) {
-            try (var reader = getFileHandler().getFileReader(getFolder(uuid) + "/death.json")) {
-                var json = getFileHandler().getGson().fromJson(reader, Death.class);
-                var world = getUniverseHandler().getWorld(json.WorldName());
-                var posX = json.PosX();
-                var posY = json.PosY();
-                var posZ = json.PosZ();
-                var pitch = json.Pitch();
-                var yaw = json.Yaw();
-                var roll = json.Roll();
-                return Teleport.createForPlayer(world, new Transform(posX, posY, posZ, pitch, yaw, roll));
-            } catch (IOException e) {
-                return null;
-            }
-        } else return null;
-    }
-    public int getMaxHomes(PlayerRef playerRef) {
-        var ref = playerRef.getReference();
-        var listed = new ArrayList<Integer>();
-        if (ref != null) {
-            var store = ref.getStore();
-            var player = store.getComponent(ref, Player.getComponentType());
-            if (player != null) {
-                try (var reader = getFileHandler().getFileReader("mods/Essentials/config.json")) {
-                    var json = getFileHandler().getGson().fromJson(reader, EssentialsConfig.class);
-                    var maxHomes = json.MaxHomes();
-                    for (var string : maxHomes.keySet()) {
-                        if (player.hasPermission("essentials.command.sethome." + string)) {
-                            listed.add(maxHomes.get(string));
-                        }
-                    }
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
         listed.sort(Integer::compareTo);
         return listed.getLast();
-    }
-    public boolean setHome(UUID uuid, Transform transform, World world, String homeName) {
-        var worldName = world.getName();
-        var pos = transform.getPosition();
-        var posX = pos.x;
-        var posY = pos.y;
-        var posZ = pos.z;
-        var rotation = transform.getRotation();
-        var pitch = rotation.getPitch();
-        var yaw = rotation.getYaw();
-        var roll = rotation.getRoll();
-        try (var writer = getFileHandler().getFileWriter(getHomesFolder(uuid) + "/" + homeName + ".json")) {
-            getFileHandler().getGson().toJson(new SetHome(worldName, posX, posY, posZ, pitch, yaw, roll), writer);
-            return true;
-        } catch (IOException e) {
-            return false;
-        }
-    }
-    public boolean homeExists(UUID uuid, String homeName) {
-        return getHomeFile(uuid, homeName).exists();
-    }
-    public Teleport getHome(UUID uuid, String homeName) {
-        var homesFolder = getHomesFolder(uuid);
-        if (homeExists(uuid, homeName)) {
-            try (var writer = getFileHandler().getFileReader(homesFolder + "/" + homeName + ".json")) {
-                var json = getFileHandler().getGson().fromJson(writer, SetHome.class);
-                var world = getUniverseHandler().getWorld(json.WorldName());
-                var posX = json.PosX();
-                var posY = json.PosY();
-                var posZ = json.PosZ();
-                var pitch = json.Pitch();
-                var yaw = json.Yaw();
-                var roll = json.Roll();
-                return Teleport.createForPlayer(world, new Transform(posX, posY, posZ, pitch, yaw, roll));
-            } catch (IOException e) {
-                return null;
-            }
-        } else return null;
-    }
-    public List<String> getHomes(UUID uuid) {
-        var listed = new ArrayList<String>();
-        var folder = getHomesFolder(uuid);
-        if (folder.exists() && folder.isDirectory()) {
-            var files = folder.listFiles();
-            if (files != null) {
-                for (var file : files) {
-                    var fileName = file.getName().replace(".json", "");
-                    listed.add(fileName);
-                }
-            }
-        }
-        return listed;
     }
     public void setPVP(PlayerRef playerRef, boolean value) {
         if (value) {
@@ -154,72 +49,44 @@ public class PlayerHandler {
     public boolean isPVP(PlayerRef playerRef) {
         return getPVP().contains(playerRef);
     }
-    public boolean hasJoined(UUID uuid) {
-        return getFolder(uuid).exists();
-    }
     public String getUsername(UUID uuid) {
-        if (getFileHandler().getFile("mods/Essentials/userdata/" + uuid + "/username.json").exists()) {
-            try (var reader = getFileHandler().getFileReader("mods/Essentials/userdata/" + uuid + "/username.json")) {
-                var json = getFileHandler().getGson().fromJson(reader, Username.class);
-                return json.Username();
-            } catch (IOException e) {
-                return null;
+        var loaded = Universe.get().getPlayerStorage().load(uuid);
+        try {
+            var holder = loaded.get();
+            var namePlate = holder.getComponent(Nameplate.getComponentType());
+            if (namePlate != null) {
+                return namePlate.getText();
+            } else return null;
+        } catch (InterruptedException | ExecutionException e) {
+            return null;
+        }
+    }
+    public boolean hasJoined(UUID uuid) {
+        var loaded = Universe.get().getPlayerStorage().load(uuid);
+        try {
+            return loaded.get().getComponent(getInstance().getAccountComponentType()) != null;
+        } catch (InterruptedException | ExecutionException e) {
+            return false;
+        }
+    }
+    public void setup(UUID uuid) {
+        var loaded = Universe.get().getPlayerStorage().load(uuid);
+        var username = getUsername(uuid);
+        try {
+            var holder = loaded.get();
+            if (holder.getComponent(getInstance().getAccountComponentType()) == null) {
+                holder.addComponent(getInstance().getAccountComponentType(), new Account());
             }
-        } else return null;
-    }
-    public String getUsername(String uuidString) {
-        if (getFileHandler().getFile("mods/Essentials/userdata/" + uuidString + "/username.json").exists()) {
-            try (var reader = getFileHandler().getFileReader("mods/Essentials/userdata/" + uuidString + "/username.json")) {
-                var json = getFileHandler().getGson().fromJson(reader, Username.class);
-                return json.Username();
-            } catch (IOException e) {
-                return null;
+            if (holder.getComponent(getInstance().getDeathComponentType()) == null) {
+                holder.addComponent(getInstance().getDeathComponentType(), new Death());
             }
-        } else return null;
-    }
-    public void setup(PlayerRef playerRef) {
-        var uuid = playerRef.getUuid();
-        createFolders(uuid);
-        createAccount(uuid);
-        update(playerRef);
-    }
-    public void createFolders(UUID uuid) {
-        var folder = getFolder(uuid);
-        if (!folder.exists()) {
-            folder.mkdir();
-        }
-        var homesFolder = getHomesFolder(uuid);
-        if (!homesFolder.exists()) {
-            homesFolder.mkdir();
-        }
-    }
-    public void createAccount(UUID uuid) {
-        if (getFileHandler().getFile("mods/Essentials/userdata/" + uuid + "/account.json").exists())return;
-        try (var writer = getFileHandler().getFileWriter("mods/Essentials/userdata/" + uuid + "/account.json")) {
-            getFileHandler().getGson().toJson(new Account(0), writer);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    public void update(PlayerRef playerRef) {
-        var uuid = playerRef.getUuid();
-        try (var writer = getFileHandler().getFileWriter("mods/Essentials/userdata/" + uuid + "/username.json")) {
-            getFileHandler().getGson().toJson(new Username(playerRef.getUsername()), writer);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    public ArrayList<String> getOffliners() {
-        var folder = getUserdataFolder();
-        var filesFolders = folder.listFiles();
-        var listed = new ArrayList<String>();
-        if (filesFolders != null) {
-            for (var uuidFolder : filesFolders) {
-                var uuidString = uuidFolder.getName();
-                listed.add(uuidString);
+            if (holder.getComponent(getInstance().getHomesComponentType()) == null) {
+                holder.addComponent(getInstance().getHomesComponentType(), new Homes());
             }
+            HytaleLogger.getLogger().atInfo().log(username + " has been setup");
+        } catch (InterruptedException | ExecutionException e) {
+            HytaleLogger.getLogger().atInfo().log(username + " failed to setup");
         }
-        return listed;
     }
     public ArrayList<PlayerRef> getPVP() {
         return PVP;

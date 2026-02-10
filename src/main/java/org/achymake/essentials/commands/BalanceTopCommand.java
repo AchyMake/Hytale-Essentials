@@ -23,21 +23,23 @@ public class BalanceTopCommand extends CommandBase {
     }
     @Override
     protected void executeSync(@NonNullDecl CommandContext commandContext) {
-        var topAccounts = new ArrayList<>(getEconomyHandler().getTopAccounts());
-        if (!topAccounts.isEmpty()) {
-            commandContext.sendMessage(Message.raw("Top 10 Balance").color(Color.ORANGE));
-            for (int i = 0; i < topAccounts.size(); i++) {
-                var listed = topAccounts.get(i);
-                var value = i + 1;
-                var username = listed.getKey();
-                var account = getEconomyHandler().format(listed.getValue());
-                commandContext.sendMessage(Message.join(
-                        Message.raw(value + " ").color(Color.ORANGE),
-                        Message.raw(username + " "),
-                        Message.raw(account)
+        getInstance().getUniverseHandler().getSpawnWorld().execute(() -> {
+            var topAccounts = new ArrayList<>(getEconomyHandler().getTopAccounts());
+            if (!topAccounts.isEmpty()) {
+                commandContext.sendMessage(Message.raw("Top 10 Balance").color(Color.ORANGE));
+                for (int i = 0; i < topAccounts.size(); i++) {
+                    var listed = topAccounts.get(i);
+                    var value = i + 1;
+                    var username = listed.getKey();
+                    var account = getEconomyHandler().format(listed.getValue());
+                    commandContext.sendMessage(Message.join(
+                            Message.raw(value + " ").color(Color.ORANGE),
+                            Message.raw(username + " "),
+                            Message.raw(account)
 
-                ));
-            }
-        } else commandContext.sendMessage(Message.raw("Seems like top accounts is empty").color(Color.RED));
+                    ));
+                }
+            } else commandContext.sendMessage(Message.raw("Seems like top accounts is empty").color(Color.RED));
+        });
     }
 }

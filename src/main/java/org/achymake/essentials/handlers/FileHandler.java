@@ -1,8 +1,7 @@
 package org.achymake.essentials.handlers;
 
 import com.google.gson.Gson;
-import org.achymake.essentials.Essentials;
-import org.achymake.essentials.files.Death;
+import com.google.gson.GsonBuilder;
 import org.achymake.essentials.files.EssentialsConfig;
 
 import java.io.File;
@@ -24,7 +23,7 @@ public class FileHandler {
         return new FileWriter(path);
     }
     public Gson getGson() {
-        return new Gson();
+        return new GsonBuilder().setPrettyPrinting().create();
     }
     public File getFolder() {
         return getFile("mods/Essentials");

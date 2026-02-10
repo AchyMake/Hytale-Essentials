@@ -36,21 +36,22 @@ class SetHomeNamedCommand extends AbstractPlayerCommand {
                            @Nonnull PlayerRef playerRef,
                            @Nonnull World world) {
         var homeName = value.get(commandContext);
-        var uuid = playerRef.getUuid();
-        var homes = getPlayerHandler().getHomes(uuid);
+        //var homes = getPlayerHandler().getHomes(uuid);
+        var homes = store.getComponent(ref, getInstance().getHomesComponentType());
         var maxHomes = getPlayerHandler().getMaxHomes(playerRef);
-        if (homes.contains(homeName) || maxHomes > homes.size()) {
-            var transform = playerRef.getTransform();
-            if (getPlayerHandler().setHome(uuid, transform, world, homeName)) {
+        if (homes != null) {
+            if (homes.exists(homeName) || maxHomes > homes.getHomes().size()) {
+                var transform = playerRef.getTransform();
+                homes.setHome(homeName, world, transform);
                 playerRef.sendMessage(Message.join(
                         Message.raw("You have set a home named ").color(Color.ORANGE),
                         Message.raw(homeName)
                 ));
-            } else playerRef.sendMessage(Message.raw("Seems like there was an error while saving the file").color(Color.RED));
-        } else playerRef.sendMessage(Message.join(
-                Message.raw("You have reached limit of ").color(Color.RED),
-                Message.raw(maxHomes + " "),
-                Message.raw("homes").color(Color.RED)
-        ));
+            } else playerRef.sendMessage(Message.join(
+                    Message.raw("You have reached limit of ").color(Color.RED),
+                    Message.raw(maxHomes + " "),
+                    Message.raw("homes").color(Color.RED)
+            ));
+        } else playerRef.sendMessage(Message.raw("Seems like you do not have Homes Component").color(Color.RED));
     }
 }

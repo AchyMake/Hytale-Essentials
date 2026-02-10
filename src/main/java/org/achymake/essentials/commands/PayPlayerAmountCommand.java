@@ -43,27 +43,31 @@ public class PayPlayerAmountCommand extends AbstractPlayerCommand {
         if (targetRef != null && targetRef.isValid()) {
             if (targetPlayerRef != playerRef) {
                 if (amount > 0) {
-                    var uuid = playerRef.getUuid();
-                    var targetUuid = targetPlayerRef.getUuid();
                     var formatted = getEconomyHandler().format(amount);
-                    if (getEconomyHandler().has(uuid, amount)) {
-                        if (getEconomyHandler().remove(uuid, amount) && getEconomyHandler().add(targetUuid, amount)) {
-                            playerRef.sendMessage(Message.join(
-                                    Message.raw("You sent ").color(Color.ORANGE),
-                                    Message.raw(formatted + " "),
-                                    Message.raw("to ").color(Color.ORANGE),
-                                    Message.raw(targetPlayerRef.getUsername())
-                            ));
-                            targetPlayerRef.sendMessage(Message.join(
-                                    Message.raw(playerRef.getUsername() + " "),
-                                    Message.raw("has sent you ").color(Color.ORANGE),
+                    world.execute(() -> {
+                        var account = store.getComponent(ref, getInstance().getAccountComponentType());
+                        var targetAccount = store.getComponent(targetRef, getInstance().getAccountComponentType());
+                        if (account != null && targetAccount != null) {
+                            if (account.has(amount)) {
+                                targetAccount.add(amount);
+                                account.remove(amount);
+                                playerRef.sendMessage(Message.join(
+                                        Message.raw("You sent ").color(Color.ORANGE),
+                                        Message.raw(formatted + " "),
+                                        Message.raw("to ").color(Color.ORANGE),
+                                        Message.raw(targetPlayerRef.getUsername())
+                                ));
+                                targetPlayerRef.sendMessage(Message.join(
+                                        Message.raw(playerRef.getUsername() + " "),
+                                        Message.raw("has sent you ").color(Color.ORANGE),
+                                        Message.raw(formatted)
+                                ));
+                            } else playerRef.sendMessage(Message.join(
+                                    Message.raw("Seems like you don't have ").color(Color.RED),
                                     Message.raw(formatted)
                             ));
-                        } else playerRef.sendMessage(Message.raw("Seems like there was an error while saving the files").color(Color.RED));
-                    } else playerRef.sendMessage(Message.join(
-                            Message.raw("Seems like you don't have ").color(Color.RED),
-                            Message.raw(formatted)
-                    ));
+                        }
+                    });
                 } else playerRef.sendMessage(Message.raw("Seems like you were trying to put negative integer").color(Color.RED));
             } else playerRef.sendMessage(Message.raw("Seems like you tried to pay your self").color(Color.RED));
         }

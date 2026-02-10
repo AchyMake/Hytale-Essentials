@@ -31,23 +31,28 @@ class EconomyRemoveCommand extends CommandBase {
     protected void executeSync(@NonNullDecl CommandContext commandContext) {
         var targetRef = this.targetRef.get(commandContext);
         var value = this.integerRequiredArg.get(commandContext);
-        if (value > 0) {
-            var uuid = targetRef.getUuid();
-            if (getEconomyHandler().has(uuid, value)) {
-                if (getEconomyHandler().remove(uuid, value)) {
-                    commandContext.sendMessage(Message.join(
-                            Message.raw("You removed ").color(Color.ORANGE),
-                            Message.raw(getEconomyHandler().format(value) + " ").color(Color.RED),
-                            Message.raw("from ").color(Color.ORANGE),
-                            Message.raw(targetRef.getUsername()),
-                            Message.raw("'s account").color(Color.ORANGE)
-                    ));
-                    commandContext.sendMessage(Message.join(
-                            Message.raw("New balance ").color(Color.ORANGE),
-                            Message.raw(getEconomyHandler().format(getEconomyHandler().get(uuid)))
-                    ));
-                } else commandContext.sendMessage(Message.raw("Seems like there was an error while saving the file").color(Color.RED));
-            } else commandContext.sendMessage(Message.raw("Seems like result would be negative").color(Color.RED));
-        } else commandContext.sendMessage(Message.raw("Seems like you were trying to put a negative integer").color(Color.RED));
+        var ref = targetRef.getReference();
+        if (ref != null && ref.isValid()) {
+            var username = targetRef.getUsername();
+            var store = ref.getStore();
+            if (value > 0) {
+                var world = getInstance().getUniverseHandler().getWorld(targetRef.getWorldUuid());
+                world.execute(() -> {
+                    var account = store.getComponent(ref, getInstance().getAccountComponentType());
+                    if (account != null) {
+                        if (account.has(value)) {
+                            account.remove(value);
+                            commandContext.sendMessage(Message.join(
+                                    Message.raw("You removed ").color(Color.ORANGE),
+                                    Message.raw(getEconomyHandler().format(value) + " ").color(Color.RED),
+                                    Message.raw("from ").color(Color.ORANGE),
+                                    Message.raw(username),
+                                    Message.raw("'s account").color(Color.ORANGE)
+                            ));
+                        } else commandContext.sendMessage(Message.raw("Seems like result would be negative").color(Color.RED));
+                    } else commandContext.sendMessage(Message.raw("Seems like target do not have Account Component").color(Color.RED));
+                });
+            } else commandContext.sendMessage(Message.raw("Seems like you were trying to put a negative integer").color(Color.RED));
+        }
     }
 }

@@ -9,8 +9,6 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.achymake.essentials.Essentials;
-import org.achymake.essentials.handlers.FileHandler;
-import org.achymake.essentials.handlers.PlayerHandler;
 
 import javax.annotation.Nonnull;
 import java.awt.Color;
@@ -18,12 +16,6 @@ import java.awt.Color;
 public class DelHomeCommand extends AbstractPlayerCommand {
     private Essentials getInstance() {
         return Essentials.getInstance();
-    }
-    private FileHandler getFileHandler() {
-        return getInstance().getFileHandler();
-    }
-    private PlayerHandler getPlayerHandler() {
-        return getInstance().getPlayerHandler();
     }
     public DelHomeCommand() {
         super("delhome", "deletes home", false);
@@ -36,17 +28,19 @@ public class DelHomeCommand extends AbstractPlayerCommand {
                            @Nonnull Ref<EntityStore> ref,
                            @Nonnull PlayerRef playerRef,
                            @Nonnull World world) {
-        var uuid = playerRef.getUuid();
-        if (getPlayerHandler().homeExists(uuid, "home")) {
-            getFileHandler().deleteFile(getPlayerHandler().getHomeFile(uuid, "home"));
-            playerRef.sendMessage(Message.join(
-                    Message.raw("You have deleted a home named ").color(Color.ORANGE),
-                    Message.raw("home")
+        var homes = store.getComponent(ref, getInstance().getHomesComponentType());
+        if (homes != null) {
+            if (homes.exists("home")) {
+                homes.delHome("home");
+                playerRef.sendMessage(Message.join(
+                        Message.raw("You have deleted a home named ").color(Color.ORANGE),
+                        Message.raw("home")
+                ));
+            } else playerRef.sendMessage(Message.join(
+                    Message.raw("Seems like ").color(Color.RED),
+                    Message.raw("home "),
+                    Message.raw("does not exist").color(Color.RED)
             ));
-        } else playerRef.sendMessage(Message.join(
-                Message.raw("Seems like ").color(Color.RED),
-                Message.raw("home "),
-                Message.raw("does not exist").color(Color.RED)
-        ));
+        } else playerRef.sendMessage(Message.raw("Seems like you do not have Homes Component").color(Color.RED));
     }
 }

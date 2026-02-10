@@ -1,5 +1,6 @@
 package org.achymake.essentials.commands;
 
+import com.hypixel.hytale.math.vector.Transform;
 import org.achymake.essentials.Essentials;
 import org.achymake.essentials.handlers.PlayerHandler;
 import org.achymake.essentials.handlers.TeleportHandler;
@@ -35,14 +36,19 @@ public class BackCommand extends AbstractPlayerCommand {
                            @Nonnull Ref<EntityStore> ref,
                            @Nonnull PlayerRef playerRef,
                            @Nonnull World world) {
-        var uuid = playerRef.getUuid();
-        var deathTP = getPlayerHandler().getDeath(uuid);
-        if (deathTP != null) {
-            var message = Message.join(
-                    Message.raw("Teleporting to ").color(Color.ORANGE),
-                    Message.raw("Death Location")
-            );
-            getTeleportHandler().teleport(playerRef, deathTP, message, 3);
+        var death = store.getComponent(ref, getInstance().getDeathComponentType());
+        if (death != null) {
+            var deathWorld = getInstance().getUniverseHandler().getWorld(death.getWorldName());
+            if (deathWorld != null) {
+                var message = Message.join(
+                        Message.raw("Teleporting to ").color(Color.ORANGE),
+                        Message.raw("Death Location")
+                );
+                var x = death.getX();
+                var y = death.getY();
+                var z = death.getZ();
+                getTeleportHandler().teleport(playerRef, getTeleportHandler().createForPlayer(deathWorld, new Transform(x, y, z)), message, 3);
+            } else playerRef.sendMessage(Message.raw("Seems like your death location doesn't exist").color(Color.RED));
         } else playerRef.sendMessage(Message.raw("Seems like your death location doesn't exist").color(Color.RED));
     }
 }

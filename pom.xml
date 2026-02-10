@@ -6,7 +6,7 @@
 
     <groupId>org.achymake.essentials</groupId>
     <artifactId>Essentials</artifactId>
-    <version>aa1b071c2-1.0.6</version>
+    <version>aa1b071c2-1.0.7</version>
 
     <properties>
         <maven.compiler.source>25</maven.compiler.source>
@@ -19,10 +19,6 @@
             <id>hytale-release</id>
             <url>https://maven.hytale.com/release</url>
         </repository>
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
     </repositories>
 
     <dependencies>
@@ -30,12 +26,6 @@
             <groupId>com.hypixel.hytale</groupId>
             <artifactId>Server</artifactId>
             <version>2026.02.06-aa1b071c2</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.github.Zoltus</groupId>
-            <artifactId>TinyMessage</artifactId>
-            <version>2.0.1</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

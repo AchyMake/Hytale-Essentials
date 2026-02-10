@@ -1,7 +1,12 @@
 package org.achymake.essentials;
 
+import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.server.core.event.events.player.*;
+import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.achymake.essentials.commands.*;
+import org.achymake.essentials.components.Account;
+import org.achymake.essentials.components.Death;
+import org.achymake.essentials.components.Homes;
 import org.achymake.essentials.handlers.*;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
@@ -10,6 +15,9 @@ import org.achymake.essentials.system.*;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 
 public class Essentials extends JavaPlugin {
+    private ComponentType<EntityStore, Death> deathComponentType;
+    private ComponentType<EntityStore, Homes> homesComponentType;
+    private ComponentType<EntityStore, Account> accountComponentType;
     private static Essentials instance;
     private EconomyHandler economyHandler;
     private FileHandler fileHandler;
@@ -26,6 +34,21 @@ public class Essentials extends JavaPlugin {
     @Override
     protected void setup() {
         super.setup();
+        accountComponentType = getEntityStoreRegistry().registerComponent(
+                Account.class,
+                "Account",
+                Account.CODEC
+        );
+        homesComponentType = getEntityStoreRegistry().registerComponent(
+                Homes.class,
+                "Homes",
+                Homes.CODEC
+        );
+        deathComponentType = getEntityStoreRegistry().registerComponent(
+                Death.class,
+                "DeathLocationComponent",
+                Death.CODEC
+        );
         instance = this;
         economyHandler = new EconomyHandler();
         fileHandler = new FileHandler();
@@ -70,11 +93,19 @@ public class Essentials extends JavaPlugin {
         var entityStoreRegistry = getEntityStoreRegistry();
         eventRegistry.registerGlobal(AddPlayerToWorldEvent.class, AddPlayerToWorld::onAddPlayerToWorld);
         eventRegistry.registerGlobal(PlayerChatEvent.class, PlayerChat::onPlayerChat);
-        eventRegistry.registerGlobal(PlayerConnectEvent.class, PlayerConnect::onPlayerConnect);
-        eventRegistry.registerGlobal(PlayerDisconnectEvent.class, PlayerDisconnect::onPlayerDisconnect);
         entityStoreRegistry.registerSystem(new ChangeGameMode());
         entityStoreRegistry.registerSystem(new DamageEvent());
         entityStoreRegistry.registerSystem(new DeathEvent());
+        entityStoreRegistry.registerSystem(new PlayerAdded());
+    }
+    public ComponentType<EntityStore, Account> getAccountComponentType() {
+        return accountComponentType;
+    }
+    public ComponentType<EntityStore, Homes> getHomesComponentType() {
+        return homesComponentType;
+    }
+    public ComponentType<EntityStore, Death> getDeathComponentType() {
+        return deathComponentType;
     }
     public VanishHandler getVanishHandler() {
         return vanishHandler;

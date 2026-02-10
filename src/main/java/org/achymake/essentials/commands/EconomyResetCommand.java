@@ -7,7 +7,6 @@ import com.hypixel.hytale.server.core.command.system.arguments.types.ArgTypes;
 import com.hypixel.hytale.server.core.command.system.basecommands.CommandBase;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import org.achymake.essentials.Essentials;
-import org.achymake.essentials.handlers.EconomyHandler;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 
 import java.awt.Color;
@@ -15,9 +14,6 @@ import java.awt.Color;
 public class EconomyResetCommand extends CommandBase {
     private Essentials getInstance() {
         return Essentials.getInstance();
-    }
-    private EconomyHandler getEconomyHandler() {
-        return getInstance().getEconomyHandler();
     }
     private final RequiredArg<PlayerRef> targetRef;
     public EconomyResetCommand() {
@@ -28,13 +24,22 @@ public class EconomyResetCommand extends CommandBase {
     @Override
     protected void executeSync(@NonNullDecl CommandContext commandContext) {
         var targetRef = this.targetRef.get(commandContext);
-        var uuid = targetRef.getUuid();
-        if (getEconomyHandler().set(uuid, 0)) {
-            commandContext.sendMessage(Message.join(
-                    Message.raw("You reset ").color(Color.ORANGE),
-                    Message.raw(targetRef.getUsername()),
-                    Message.raw("'s account").color(Color.ORANGE)
-            ));
-        } else commandContext.sendMessage(Message.raw("Seems like there was an error while saving the file").color(Color.RED));
+        var ref = targetRef.getReference();
+        if (ref != null && ref.isValid()) {
+            var username = targetRef.getUsername();
+            var store = ref.getStore();
+            var world = getInstance().getUniverseHandler().getWorld(targetRef.getWorldUuid());
+            world.execute(() -> {
+                var account = store.getComponent(ref, getInstance().getAccountComponentType());
+                if (account != null) {
+                    account.set(0.0);
+                    commandContext.sendMessage(Message.join(
+                            Message.raw("You reset ").color(Color.ORANGE),
+                            Message.raw(username),
+                            Message.raw("'s account").color(Color.ORANGE)
+                    ));
+                } else commandContext.sendMessage(Message.raw("Seems like target do not have Account Component").color(Color.RED));
+            });
+        }
     }
 }

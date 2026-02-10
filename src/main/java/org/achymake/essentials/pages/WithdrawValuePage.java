@@ -71,22 +71,26 @@ public class WithdrawValuePage extends InteractiveCustomUIPage<WithdrawValuePage
                 var entered = Integer.parseInt(data.integer);
                 if (entered > 0 && 1000 >= entered) {
                     var formatted = getEconomyHandler().format(entered);
-                    if (getEconomyHandler().has(playerRef.getUuid(), entered)) {
-                        if (getEconomyHandler().remove(playerRef.getUuid(), entered)) {
-                            player.getInventory().getCombinedHotbarFirst().addItemStack(new ItemStack("Coins", entered));
-                            player.sendMessage(Message.join(
+                    store.getExternalData().getWorld().execute(() -> {
+                        var account = store.getComponent(ref, getInstance().getAccountComponentType());
+                        if (account != null) {
+                            if (account.has(entered)) {
+                                account.remove(entered);
+                                player.getInventory().getCombinedHotbarFirst().addItemStack(new ItemStack("Coins", entered));
+                                player.sendMessage(Message.join(
+                                        Message.raw("Bank Manager").color(Color.ORANGE),
+                                        Message.raw(": You withdrew "),
+                                        Message.raw(formatted + " "),
+                                        Message.raw("from bank")
+                                ));
+                            } else player.sendMessage(Message.join(
                                     Message.raw("Bank Manager").color(Color.ORANGE),
-                                    Message.raw(": You withdrew "),
+                                    Message.raw(": Seems like you don't have "),
                                     Message.raw(formatted + " "),
-                                    Message.raw("from bank")
+                                    Message.raw("in your bank")
                             ));
                         }
-                    } else player.sendMessage(Message.join(
-                            Message.raw("Bank Manager").color(Color.ORANGE),
-                            Message.raw(": Seems like you don't have "),
-                            Message.raw(formatted + " "),
-                            Message.raw("in your bank")
-                    ));
+                    });
                 } else player.sendMessage(Message.join(
                         Message.raw("Bank Manager").color(Color.ORANGE),
                         Message.raw(": Seems like you tried to input an inadequate amount")

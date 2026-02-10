@@ -11,7 +11,6 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.achymake.essentials.Essentials;
-import org.achymake.essentials.handlers.PlayerHandler;
 import org.achymake.essentials.handlers.TeleportHandler;
 
 import javax.annotation.Nonnull;
@@ -22,9 +21,6 @@ class HomeNamedCommand extends AbstractPlayerCommand {
     private final RequiredArg<String> value;
     private Essentials getInstance() {
         return Essentials.getInstance();
-    }
-    private PlayerHandler getPlayerHandler() {
-        return getInstance().getPlayerHandler();
     }
     private TeleportHandler getTeleportHandler() {
         return getInstance().getTeleportHandler();
@@ -41,18 +37,20 @@ class HomeNamedCommand extends AbstractPlayerCommand {
                            @Nonnull PlayerRef playerRef,
                            @Nonnull World world) {
         var homeName = value.get(commandContext);
-        var uuid = playerRef.getUuid();
-        var homeTP = getPlayerHandler().getHome(uuid, homeName);
-        if (homeTP != null) {
-            var message = Message.join(
-                    Message.raw("Teleporting to ").color(Color.ORANGE),
-                    Message.raw(homeName)
-            );
-            getTeleportHandler().teleport(playerRef, homeTP, message, 3);
-        } else playerRef.sendMessage(Message.join(
-                Message.raw("Seems like ").color(Color.RED),
-                Message.raw(homeName + " "),
-                Message.raw("doesn't exists").color(Color.RED)
-        ));
+        var homes = store.getComponent(ref, getInstance().getHomesComponentType());
+        if (homes != null) {
+            var home = homes.getHome(homeName);
+            if (home != null) {
+                var message = Message.join(
+                        Message.raw("Teleporting to ").color(Color.ORANGE),
+                        Message.raw(homeName)
+                );
+                getTeleportHandler().teleport(playerRef, home, message, 3);
+            } else playerRef.sendMessage(Message.join(
+                    Message.raw("Seems like ").color(Color.RED),
+                    Message.raw(homeName + " "),
+                    Message.raw("doesn't exists").color(Color.RED)
+            ));
+        } else playerRef.sendMessage(Message.raw("Seems like you do not have Homes Component").color(Color.RED));
     }
 }

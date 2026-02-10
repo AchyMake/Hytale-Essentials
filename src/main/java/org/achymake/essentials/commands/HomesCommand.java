@@ -9,7 +9,6 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.achymake.essentials.Essentials;
-import org.achymake.essentials.handlers.PlayerHandler;
 
 import javax.annotation.Nonnull;
 import java.awt.Color;
@@ -17,9 +16,6 @@ import java.awt.Color;
 public class HomesCommand extends AbstractPlayerCommand {
     private Essentials getInstance() {
         return Essentials.getInstance();
-    }
-    private PlayerHandler getPlayerHandler() {
-        return getInstance().getPlayerHandler();
     }
     public HomesCommand() {
         super("homes", "check home names", false);
@@ -30,13 +26,15 @@ public class HomesCommand extends AbstractPlayerCommand {
                            @Nonnull Ref<EntityStore> ref,
                            @Nonnull PlayerRef playerRef,
                            @Nonnull World world) {
-        var uuid = playerRef.getUuid();
-        var homeList = getPlayerHandler().getHomes(uuid);
-        if (!homeList.isEmpty()) {
-            playerRef.sendMessage(Message.raw("Homes:").color(Color.ORANGE));
-            for (var homes : homeList) {
-                playerRef.sendMessage(Message.raw("- " + homes));
-            }
-        } else playerRef.sendMessage(Message.raw("Seems like you haven't set any homes yet").color(Color.RED));
+        var homes = store.getComponent(ref, getInstance().getHomesComponentType());
+        if (homes != null) {
+            var listed = homes.getHomes();
+            if (!listed.isEmpty()) {
+                playerRef.sendMessage(Message.raw("Homes:").color(Color.ORANGE));
+                for (var homeName : listed) {
+                    playerRef.sendMessage(Message.raw("- " + homeName));
+                }
+            } else playerRef.sendMessage(Message.raw("Seems like you haven't set any homes yet").color(Color.RED));
+        } else playerRef.sendMessage(Message.raw("Seems like you do not have Homes Component").color(Color.RED));
     }
 }

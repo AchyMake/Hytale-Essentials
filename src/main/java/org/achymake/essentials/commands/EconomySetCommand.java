@@ -31,15 +31,24 @@ class EconomySetCommand extends CommandBase {
     protected void executeSync(@NonNullDecl CommandContext commandContext) {
         var targetRef = this.targetRef.get(commandContext);
         var value = this.integerRequiredArg.get(commandContext);
-        var uuid = targetRef.getUuid();
-        if (getEconomyHandler().set(uuid, value)) {
-            commandContext.sendMessage(Message.join(
-                    Message.raw("You set ").color(Color.ORANGE),
-                    Message.raw(getEconomyHandler().format(value) + " ").color(Color.GREEN),
-                    Message.raw("to ").color(Color.ORANGE),
-                    Message.raw(targetRef.getUsername()),
-                    Message.raw("'s account").color(Color.ORANGE)
-            ));
-        } else commandContext.sendMessage(Message.raw("Seems like there was an error while saving the file").color(Color.RED));
+        var ref = targetRef.getReference();
+        if (ref != null && ref.isValid()) {
+            var username = targetRef.getUsername();
+            var store = ref.getStore();
+            var world = getInstance().getUniverseHandler().getWorld(targetRef.getWorldUuid());
+            world.execute(() -> {
+                var account = store.getComponent(ref, getInstance().getAccountComponentType());
+                if (account != null) {
+                    account.set(value);
+                    commandContext.sendMessage(Message.join(
+                            Message.raw("You set ").color(Color.ORANGE),
+                            Message.raw(getEconomyHandler().format(value) + " ").color(Color.GREEN),
+                            Message.raw("to ").color(Color.ORANGE),
+                            Message.raw(username),
+                            Message.raw("'s account").color(Color.ORANGE)
+                    ));
+                } else commandContext.sendMessage(Message.raw("Seems like target do not have Account Component").color(Color.RED));
+            });
+        }
     }
 }
