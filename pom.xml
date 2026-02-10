@@ -6,7 +6,7 @@
 
     <groupId>org.achymake.essentials</groupId>
     <artifactId>Essentials</artifactId>
-    <version>aa1b071c2-1.0.7</version>
+    <version>aa1b071c2-1.0.8</version>
 
     <properties>
         <maven.compiler.source>25</maven.compiler.source>

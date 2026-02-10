@@ -20,7 +20,7 @@ import org.achymake.essentials.handlers.UniverseHandler;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
-import java.awt.*;
+import java.awt.Color;
 
 public class PlayerAdded extends RefSystem<EntityStore> {
     private Essentials getInstance() {
@@ -37,36 +37,19 @@ public class PlayerAdded extends RefSystem<EntityStore> {
                               @NonNullDecl AddReason addReason,
                               @NonNullDecl Store<EntityStore> store,
                               @NonNullDecl CommandBuffer<EntityStore> commandBuffer) {
-        var uuid = commandBuffer.getComponent(ref, UUIDComponent.getComponentType()).getUuid();
         var username = commandBuffer.getComponent(ref, Nameplate.getComponentType()).getText();
-        if (getPlayerHandler().hasJoined(uuid)) {
-            if (PermissionsModule.get().hasPermission(uuid, "essentials.event.join.message")) {
-                getUniverseHandler().sendAll(Message.join(
-                        Message.raw(username + " "),
-                        Message.raw("has joined the Server [").color(Color.ORANGE),
-                        Message.raw("+").color(Color.GREEN),
-                        Message.raw("]").color(Color.ORANGE)
-                ));
-            } else getUniverseHandler().sendAll(Message.join(
-                            Message.raw(username + " "),
-                            Message.raw("has joined the Server").color(Color.GRAY)),
-                    "essentials.event.join.notify");
-        } else {
-            getUniverseHandler().sendAll(Message.join(
-                    Message.raw(username),
-                    Message.raw(" has joined the server for the first time!").color(Color.ORANGE)
-            ));
-        }
         if (commandBuffer.getComponent(ref, getInstance().getAccountComponentType()) == null) {
             commandBuffer.addComponent(ref, getInstance().getAccountComponentType(), new Account());
+            HytaleLogger.getLogger().atInfo().log(username + " Account Component Added");
         }
         if (commandBuffer.getComponent(ref, getInstance().getDeathComponentType()) == null) {
             commandBuffer.addComponent(ref, getInstance().getDeathComponentType(), new Death());
+            HytaleLogger.getLogger().atInfo().log(username + " Death Location Component Added");
         }
         if (commandBuffer.getComponent(ref, getInstance().getHomesComponentType()) == null) {
             commandBuffer.addComponent(ref, getInstance().getHomesComponentType(), new Homes());
+            HytaleLogger.getLogger().atInfo().log(username + " Homes Component Added");
         }
-        HytaleLogger.getLogger().atInfo().log(username + " has been setup");
     }
     @Override
     public void onEntityRemove(@NonNullDecl Ref<EntityStore> ref,

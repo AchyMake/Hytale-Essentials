@@ -91,8 +91,10 @@ public class Essentials extends JavaPlugin {
     private void events() {
         var eventRegistry = getEventRegistry();
         var entityStoreRegistry = getEntityStoreRegistry();
-        eventRegistry.registerGlobal(AddPlayerToWorldEvent.class, AddPlayerToWorld::onAddPlayerToWorld);
-        eventRegistry.registerGlobal(PlayerChatEvent.class, PlayerChat::onPlayerChat);
+        eventRegistry.registerGlobal(AddPlayerToWorldEvent.class, PlayerEvents::onAddPlayerToWorld);
+        eventRegistry.registerGlobal(PlayerChatEvent.class, PlayerEvents::onPlayerChat);
+        eventRegistry.registerGlobal(PlayerConnectEvent.class, PlayerEvents::onPlayerConnect);
+        eventRegistry.registerGlobal(PlayerDisconnectEvent.class, PlayerEvents::onPlayerDisconnect);
         entityStoreRegistry.registerSystem(new ChangeGameMode());
         entityStoreRegistry.registerSystem(new DamageEvent());
         entityStoreRegistry.registerSystem(new DeathEvent());
