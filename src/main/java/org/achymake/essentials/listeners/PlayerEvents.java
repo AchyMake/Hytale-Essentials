@@ -1,9 +1,7 @@
 package org.achymake.essentials.listeners;
 
 import com.hypixel.hytale.server.core.Message;
-import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.entity.entities.player.HiddenPlayersManager;
-import com.hypixel.hytale.server.core.entity.nameplate.Nameplate;
 import com.hypixel.hytale.server.core.event.events.player.AddPlayerToWorldEvent;
 import com.hypixel.hytale.server.core.event.events.player.PlayerChatEvent;
 import com.hypixel.hytale.server.core.event.events.player.PlayerConnectEvent;
@@ -40,8 +38,8 @@ public class PlayerEvents {
         event.setContent(getMessageHandler().censor(event.getContent()));
     }
     public static void onPlayerConnect(PlayerConnectEvent event) {
-        var username = event.getHolder().getComponent(Nameplate.getComponentType()).getText();
-        var uuid = event.getHolder().getComponent(UUIDComponent.getComponentType()).getUuid();
+        var username = event.getPlayerRef().getUsername();
+        var uuid = event.getPlayerRef().getUuid();
         if (PermissionsModule.get().hasPermission(uuid, "essentials.event.join.message")) {
             var hiddenManager = new HiddenPlayersManager();
             if (hiddenManager.isPlayerHidden(uuid))return;

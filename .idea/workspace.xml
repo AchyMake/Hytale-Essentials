@@ -4,28 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="25d84e3f-1910-4f13-bc7b-31b357ffa1d4" name="Changes" comment="corrected join/quit messages x2">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="25d84e3f-1910-4f13-bc7b-31b357ffa1d4" name="Changes" comment="clean up x2">
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/BalanceCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/BalanceCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/BalanceOtherCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/BalanceOtherCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/DepositCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/DepositCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/DepositOtherCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/DepositOtherCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/EconomyAddCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/EconomyAddCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/EconomyRemoveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/EconomyRemoveCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/EconomyResetCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/EconomyResetCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/EconomySetCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/EconomySetCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/PayPlayerAmountCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/PayPlayerAmountCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/components/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/components/Account.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/files/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/components/TeleportRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/files/SetHome.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/files/Username.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/files/Vanished.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/handlers/EconomyHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/handlers/EconomyHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/handlers/FileHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/handlers/FileHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/handlers/PlayerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/handlers/PlayerHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/handlers/UniverseHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/handlers/UniverseHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/pages/WithdrawValuePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/pages/WithdrawValuePage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/listeners/PlayerEvents.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/listeners/PlayerEvents.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -264,7 +245,23 @@
       <option name="project" value="LOCAL" />
       <updated>1770747607571</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="clean up">
+      <option name="closed" value="true" />
+      <created>1770936339076</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1770936339076</updated>
+    </task>
+    <task id="LOCAL-00017" summary="clean up x2">
+      <option name="closed" value="true" />
+      <created>1770936495180</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1770936495180</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -282,6 +279,8 @@
     <MESSAGE value="cleaned up" />
     <MESSAGE value="corrected join/quit messages" />
     <MESSAGE value="corrected join/quit messages x2" />
-    <option name="LAST_COMMIT_MESSAGE" value="corrected join/quit messages x2" />
+    <MESSAGE value="clean up" />
+    <MESSAGE value="clean up x2" />
+    <option name="LAST_COMMIT_MESSAGE" value="clean up x2" />
   </component>
 </project>
