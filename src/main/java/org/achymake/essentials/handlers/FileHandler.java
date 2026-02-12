@@ -56,7 +56,6 @@ public class FileHandler {
     }
     public void setup() {
         createFolder("mods/Essentials");
-        createFolder("mods/Essentials/userdata");
         createConfig();
     }
     public String getStore() {

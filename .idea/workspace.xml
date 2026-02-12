@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="25d84e3f-1910-4f13-bc7b-31b357ffa1d4" name="Changes" comment="clean up x2">
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/listeners/PlayerEvents.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/listeners/PlayerEvents.java" afterDir="false" />
+    <list default="true" id="25d84e3f-1910-4f13-bc7b-31b357ffa1d4" name="Changes" comment="connect update">
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/handlers/FileHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/handlers/FileHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -261,7 +260,15 @@
       <option name="project" value="LOCAL" />
       <updated>1770936495180</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="connect update">
+      <option name="closed" value="true" />
+      <created>1770936722875</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1770936722875</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -281,6 +288,7 @@
     <MESSAGE value="corrected join/quit messages x2" />
     <MESSAGE value="clean up" />
     <MESSAGE value="clean up x2" />
-    <option name="LAST_COMMIT_MESSAGE" value="clean up x2" />
+    <MESSAGE value="connect update" />
+    <option name="LAST_COMMIT_MESSAGE" value="connect update" />
   </component>
 </project>
