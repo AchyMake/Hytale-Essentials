@@ -39,50 +39,41 @@ public class DepositCommand extends AbstractPlayerCommand {
         if (player != null) {
             var inventory = player.getInventory();
             var listed = new HashMap<String, Integer>();
-            var coinID = "coins";
+            var coinID = "Coins";
             var storage = inventory.getStorage();
             var hotbar = inventory.getHotbar();
-            world.execute(() -> {
-                var account = store.getComponent(ref, getInstance().getAccountComponentType());
+            var account = store.getComponent(ref, getInstance().getAccountComponentType());
+            if (account != null) {
                 storage.forEach((i, itemStack) -> {
                     var id = itemStack.getItemId();
                     if (id.equalsIgnoreCase(coinID)) {
                         var amount = itemStack.getQuantity();
-                        if (account != null) {
-                            account.add(amount);
-                            storage.removeItemStack(itemStack);
-                            if (listed.containsKey(coinID)) {
-                                listed.put(coinID, listed.get(coinID) + amount);
-                            } else listed.put(coinID, amount);
-                        }
+                        account.add(amount);
+                        if (listed.containsKey(coinID)) {
+                            listed.put(coinID, listed.get(coinID) + amount);
+                        } else listed.put(coinID, amount);
+                        storage.removeItemStackFromSlot(i, itemStack, amount);
                     }
                 });
                 hotbar.forEach((i, itemStack) -> {
                     var id = itemStack.getItemId();
                     if (id.equalsIgnoreCase(coinID)) {
                         var amount = itemStack.getQuantity();
-                        if (account != null) {
-                            account.add(amount);
-                            storage.removeItemStack(itemStack);
-                            if (listed.containsKey(coinID)) {
-                                listed.put(coinID, listed.get(coinID) + amount);
-                            } else listed.put(coinID, amount);
-                        }
+                        account.add(amount);
+                        if (listed.containsKey(coinID)) {
+                            listed.put(coinID, listed.get(coinID) + amount);
+                        } else listed.put(coinID, amount);
+                        hotbar.removeItemStackFromSlot(i, itemStack, amount);
                     }
                 });
                 if (!listed.isEmpty()) {
                     var formatted = getEconomyHandler().format(listed.get(coinID));
                     playerRef.sendMessage(Message.join(
-                            Message.raw("Bank Manager").color(Color.ORANGE),
-                            Message.raw(": You deposit "),
-                            Message.raw(formatted + " "),
-                            Message.raw("to your account")
+                            Message.raw("You deposit ").color(Color.ORANGE),
+                            Message.raw(formatted)
                     ));
-                } else playerRef.sendMessage(Message.join(
-                        Message.raw("Bank Manager").color(Color.ORANGE),
-                        Message.raw(": Seems like you don't have any coins to deposit")
-                ));
-            });
+                } else playerRef.sendMessage(Message.raw("Seems like you don't have any coins to deposit").color(Color.RED));
+            }
         }
     }
 }

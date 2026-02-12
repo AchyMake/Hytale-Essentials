@@ -12,6 +12,7 @@ import com.hypixel.hytale.server.core.command.system.basecommands.AbstractPlayer
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import org.achymake.essentials.handlers.FileHandler;
 
 import javax.annotation.Nonnull;
 import java.awt.Color;
@@ -25,6 +26,9 @@ public class PayPlayerAmountCommand extends AbstractPlayerCommand {
     }
     private EconomyHandler getEconomyHandler() {
         return getInstance().getEconomyHandler();
+    }
+    private FileHandler getFileHandler() {
+        return getInstance().getFileHandler();
     }
     PayPlayerAmountCommand() {
         super("pay player");
@@ -43,31 +47,25 @@ public class PayPlayerAmountCommand extends AbstractPlayerCommand {
         if (targetRef != null && targetRef.isValid()) {
             if (targetPlayerRef != playerRef) {
                 if (amount > 0) {
-                    var formatted = getEconomyHandler().format(amount);
-                    world.execute(() -> {
-                        var account = store.getComponent(ref, getInstance().getAccountComponentType());
-                        var targetAccount = store.getComponent(targetRef, getInstance().getAccountComponentType());
-                        if (account != null && targetAccount != null) {
-                            if (account.has(amount)) {
-                                targetAccount.add(amount);
-                                account.remove(amount);
-                                playerRef.sendMessage(Message.join(
-                                        Message.raw("You sent ").color(Color.ORANGE),
-                                        Message.raw(formatted + " "),
-                                        Message.raw("to ").color(Color.ORANGE),
-                                        Message.raw(targetPlayerRef.getUsername())
-                                ));
-                                targetPlayerRef.sendMessage(Message.join(
-                                        Message.raw(playerRef.getUsername() + " "),
-                                        Message.raw("has sent you ").color(Color.ORANGE),
-                                        Message.raw(formatted)
-                                ));
-                            } else playerRef.sendMessage(Message.join(
-                                    Message.raw("Seems like you don't have ").color(Color.RED),
-                                    Message.raw(formatted)
-                            ));
-                        }
-                    });
+                    var formatted = getFileHandler().format(amount);
+                    if (getEconomyHandler().has(playerRef, amount)) {
+                        getEconomyHandler().remove(playerRef, amount);
+                        getEconomyHandler().add(targetPlayerRef, amount);
+                        playerRef.sendMessage(Message.join(
+                                Message.raw("You sent ").color(Color.ORANGE),
+                                Message.raw(formatted + " "),
+                                Message.raw("to ").color(Color.ORANGE),
+                                Message.raw(targetPlayerRef.getUsername())
+                        ));
+                        targetPlayerRef.sendMessage(Message.join(
+                                Message.raw(playerRef.getUsername() + " "),
+                                Message.raw("has sent you ").color(Color.ORANGE),
+                                Message.raw(formatted)
+                        ));
+                    } else playerRef.sendMessage(Message.join(
+                            Message.raw("Seems like you don't have ").color(Color.RED),
+                            Message.raw(formatted)
+                    ));
                 } else playerRef.sendMessage(Message.raw("Seems like you were trying to put negative integer").color(Color.RED));
             } else playerRef.sendMessage(Message.raw("Seems like you tried to pay your self").color(Color.RED));
         }

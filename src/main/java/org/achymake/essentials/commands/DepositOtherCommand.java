@@ -39,48 +39,41 @@ public class DepositOtherCommand extends CommandBase {
             var coinID = "coins";
             var storage = inventory.getStorage();
             var hotbar = inventory.getHotbar();
-            ref.getStore().getExternalData().getWorld().execute(() -> {
-                var account = ref.getStore().getComponent(ref, getInstance().getAccountComponentType());
-                storage.forEach((i, itemStack) -> {
-                    var id = itemStack.getItemId();
-                    if (id.equalsIgnoreCase(coinID)) {
-                        var amount = itemStack.getQuantity();
-                        if (account != null) {
-                            account.add(amount);
-                            if (listed.containsKey(coinID)) {
-                                listed.put(coinID, listed.get(coinID) + amount);
-                            } else listed.put(coinID, amount);
-                            storage.removeItemStack(itemStack);
-                        }
+            var account = ref.getStore().getComponent(ref, getInstance().getAccountComponentType());
+            storage.forEach((i, itemStack) -> {
+                var id = itemStack.getItemId();
+                if (id.equalsIgnoreCase(coinID)) {
+                    var amount = itemStack.getQuantity();
+                    if (account != null) {
+                        account.add(amount);
+                        if (listed.containsKey(coinID)) {
+                            listed.put(coinID, listed.get(coinID) + amount);
+                        } else listed.put(coinID, amount);
+                        storage.removeItemStackFromSlot(i, itemStack, amount);
                     }
-                });
-                hotbar.forEach((i, itemStack) -> {
-                    var id = itemStack.getItemId();
-                    if (id.equalsIgnoreCase(coinID)) {
-                        var amount = itemStack.getQuantity();
-                        if (account != null) {
-                            account.add(amount);
-                            if (listed.containsKey(coinID)) {
-                                listed.put(coinID, listed.get(coinID) + amount);
-                            } else listed.put(coinID, amount);
-                            hotbar.removeItemStack(itemStack);
-                        }
-                    }
-                });
-                if (!listed.isEmpty()) {
-                    var amount = listed.get(coinID);
-                    var formatted = getEconomyHandler().format(amount);
-                    target.sendMessage(Message.join(
-                            Message.raw("Bank Manager").color(Color.ORANGE),
-                            Message.raw(": You deposit "),
-                            Message.raw(formatted + " "),
-                            Message.raw("to your account")
-                    ));
-                } else target.sendMessage(Message.join(
-                        Message.raw("Bank Manager").color(Color.ORANGE),
-                        Message.raw(": Seems like you don't have any coins to deposit")
-                ));
+                }
             });
+            hotbar.forEach((i, itemStack) -> {
+                var id = itemStack.getItemId();
+                if (id.equalsIgnoreCase(coinID)) {
+                    var amount = itemStack.getQuantity();
+                    if (account != null) {
+                        account.add(amount);
+                        if (listed.containsKey(coinID)) {
+                            listed.put(coinID, listed.get(coinID) + amount);
+                        } else listed.put(coinID, amount);
+                        hotbar.removeItemStackFromSlot(i, itemStack, amount);
+                    }
+                }
+            });
+            if (!listed.isEmpty()) {
+                var amount = listed.get(coinID);
+                var formatted = getEconomyHandler().format(amount);
+                target.sendMessage(Message.join(
+                        Message.raw("You deposit ").color(Color.ORANGE),
+                        Message.raw(formatted + " ")
+                ));
+            } else target.sendMessage(Message.raw("Seems like you don't have any coins to deposit").color(Color.RED));
         }
     }
 }

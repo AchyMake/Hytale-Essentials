@@ -31,29 +31,16 @@ class EconomyAddCommand extends CommandBase {
     protected void executeSync(@NonNullDecl CommandContext commandContext) {
         var targetRef = this.targetRef.get(commandContext);
         var value = this.doubleRequiredArg.get(commandContext);
-        var ref = targetRef.getReference();
-        if (ref != null && ref.isValid()) {
-            var store = ref.getStore();
-            if (value > 0) {
-                var world = getInstance().getUniverseHandler().getWorld(targetRef.getWorldUuid());
-                world.execute(() -> {
-                    var account = store.getComponent(ref, getInstance().getAccountComponentType());
-                    if (account != null) {
-                        account.add(value);
-                        commandContext.sendMessage(Message.join(
-                                Message.raw("You added ").color(Color.ORANGE),
-                                Message.raw(getEconomyHandler().format(value) + " ").color(Color.GREEN),
-                                Message.raw("to ").color(Color.ORANGE),
-                                Message.raw(targetRef.getUsername()),
-                                Message.raw("'s account").color(Color.ORANGE)
-                        ));
-                        commandContext.sendMessage(Message.join(
-                                Message.raw("New balance ").color(Color.ORANGE),
-                                Message.raw(getEconomyHandler().format(account.getBalance()))
-                        ));
-                    } else commandContext.sendMessage(Message.raw("Seems like target do not have Account Component").color(Color.RED));
-                });
-            } else commandContext.sendMessage(Message.raw("Seems like you were trying to put a negative integer").color(Color.RED));
-        }
+        if (value > 0) {
+            var username = targetRef.getUsername();
+            getEconomyHandler().add(targetRef, value);
+            commandContext.sendMessage(Message.join(
+                    Message.raw("You added ").color(Color.ORANGE),
+                    Message.raw(getEconomyHandler().format(value) + " ").color(Color.GREEN),
+                    Message.raw("to ").color(Color.ORANGE),
+                    Message.raw(username),
+                    Message.raw("'s account").color(Color.ORANGE)
+            ));
+        } else commandContext.sendMessage(Message.raw("Seems like you were trying to put a negative integer").color(Color.RED));
     }
 }

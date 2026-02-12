@@ -4,14 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="25d84e3f-1910-4f13-bc7b-31b357ffa1d4" name="Changes" comment="cleaned up">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/listeners/PlayerEvents.java" afterDir="false" />
+    <list default="true" id="25d84e3f-1910-4f13-bc7b-31b357ffa1d4" name="Changes" comment="corrected join/quit messages x2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/Essentials.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/Essentials.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/listeners/AddPlayerToWorld.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/listeners/PlayerChat.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/system/PlayerAdded.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/system/PlayerAdded.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/BalanceCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/BalanceCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/BalanceOtherCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/BalanceOtherCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/DepositCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/DepositCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/DepositOtherCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/DepositOtherCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/EconomyAddCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/EconomyAddCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/EconomyRemoveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/EconomyRemoveCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/EconomyResetCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/EconomyResetCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/EconomySetCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/EconomySetCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/PayPlayerAmountCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/commands/PayPlayerAmountCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/components/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/components/Account.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/files/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/components/TeleportRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/files/SetHome.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/files/Username.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/files/Vanished.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/handlers/EconomyHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/handlers/EconomyHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/handlers/FileHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/handlers/FileHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/handlers/PlayerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/handlers/PlayerHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/handlers/UniverseHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/handlers/UniverseHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/pages/WithdrawValuePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/achymake/essentials/pages/WithdrawValuePage.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -234,7 +248,23 @@
       <option name="project" value="LOCAL" />
       <updated>1770746142285</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="corrected join/quit messages">
+      <option name="closed" value="true" />
+      <created>1770747381705</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1770747381705</updated>
+    </task>
+    <task id="LOCAL-00015" summary="corrected join/quit messages x2">
+      <option name="closed" value="true" />
+      <created>1770747607571</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1770747607571</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -250,6 +280,8 @@
     <MESSAGE value="patched AddPlayerToWorld thus adding player to pvp if world is pvp" />
     <MESSAGE value="hytale updates" />
     <MESSAGE value="cleaned up" />
-    <option name="LAST_COMMIT_MESSAGE" value="cleaned up" />
+    <MESSAGE value="corrected join/quit messages" />
+    <MESSAGE value="corrected join/quit messages x2" />
+    <option name="LAST_COMMIT_MESSAGE" value="corrected join/quit messages x2" />
   </component>
 </project>

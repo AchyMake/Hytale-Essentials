@@ -64,48 +64,32 @@ public class WithdrawValuePage extends InteractiveCustomUIPage<WithdrawValuePage
             @Nonnull Store<EntityStore> store,
             @Nonnull WithdrawValueEventData data) {
         var player = store.getComponent(ref, Player.getComponentType());
-        assert player != null;
-        var enteredString = data.integer;
-        if (enteredString != null && !enteredString.isEmpty()) {
-            try {
-                var entered = Integer.parseInt(data.integer);
-                if (entered > 0 && 1000 >= entered) {
-                    var formatted = getEconomyHandler().format(entered);
-                    store.getExternalData().getWorld().execute(() -> {
-                        var account = store.getComponent(ref, getInstance().getAccountComponentType());
-                        if (account != null) {
-                            if (account.has(entered)) {
-                                account.remove(entered);
-                                player.getInventory().getCombinedHotbarFirst().addItemStack(new ItemStack("Coins", entered));
-                                player.sendMessage(Message.join(
-                                        Message.raw("Bank Manager").color(Color.ORANGE),
-                                        Message.raw(": You withdrew "),
-                                        Message.raw(formatted + " "),
-                                        Message.raw("from bank")
-                                ));
-                            } else player.sendMessage(Message.join(
-                                    Message.raw("Bank Manager").color(Color.ORANGE),
-                                    Message.raw(": Seems like you don't have "),
-                                    Message.raw(formatted + " "),
-                                    Message.raw("in your bank")
+        if (player != null) {
+            var inventory = player.getInventory();
+            var enteredString = data.integer;
+            if (enteredString != null && !enteredString.isEmpty()) {
+                try {
+                    var entered = Integer.parseInt(data.integer);
+                    if (entered > 0 && 1000 >= entered) {
+                        var formatted = getEconomyHandler().format(entered);
+                        if (getEconomyHandler().has(playerRef, entered)) {
+                            getEconomyHandler().remove(playerRef, entered);
+                            inventory.getCombinedHotbarFirst().addItemStack(new ItemStack("Coins", entered));
+                            playerRef.sendMessage(Message.join(
+                                    Message.raw("You withdrew ").color(Color.ORANGE),
+                                    Message.raw(formatted)
                             ));
-                        }
-                    });
-                } else player.sendMessage(Message.join(
-                        Message.raw("Bank Manager").color(Color.ORANGE),
-                        Message.raw(": Seems like you tried to input an inadequate amount")
-                ));
-            } catch (NumberFormatException e) {
-                player.sendMessage(Message.join(
-                        Message.raw("Bank Manager").color(Color.ORANGE),
-                        Message.raw(": Seems like you input string instead of integer")
-                ));
-                player.getPageManager().setPage(ref, store, Page.None);
-            }
-        } else player.sendMessage(Message.join(
-                Message.raw("Bank Manager").color(Color.ORANGE),
-                Message.raw(": Seems like you didn't type anything")
-        ));
-        player.getPageManager().setPage(ref, store, Page.None);
+                        } else playerRef.sendMessage(Message.join(
+                                Message.raw("Seems like you don't have ").color(Color.RED),
+                                Message.raw(formatted)
+                        ));
+                    } else player.sendMessage(Message.raw("Seems like you tried to input an inadequate amount").color(Color.RED));
+                } catch (NumberFormatException e) {
+                    playerRef.sendMessage(Message.raw("Seems like you input string instead of integer").color(Color.RED));
+                    player.getPageManager().setPage(ref, store, Page.None);
+                }
+            } else playerRef.sendMessage(Message.raw("Seems like you didn't type anything").color(Color.RED));
+            player.getPageManager().setPage(ref, store, Page.None);
+        }
     }
 }

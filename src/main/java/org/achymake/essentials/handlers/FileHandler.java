@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.FileNotFoundException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -42,9 +43,6 @@ public class FileHandler {
         var maxHomes = new HashMap<String, Integer>();
         maxHomes.put("default", 3);
         maxHomes.put("vip", 6);
-        var protection = new ArrayList<String>();
-        protection.add("spawn");
-        protection.add("pvp");
         var censored = new ArrayList<String>();
         censored.add("fuck");
         censored.add("pussy");
@@ -67,6 +65,17 @@ public class FileHandler {
             return json.Store();
         } catch (IOException e) {
             return null;
+        }
+    }
+    public String format(double value) {
+        try (var reader = getFileReader("mods/Essentials/config.json")) {
+            var json = getGson().fromJson(reader, EssentialsConfig.class);
+            var formatted = new DecimalFormat(json.Format()).format(value);
+            if (json.CurrencyPrefix()) {
+                return json.Currency() + formatted;
+            } else return formatted + json.Currency();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }

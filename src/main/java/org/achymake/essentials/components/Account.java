@@ -22,7 +22,7 @@ public class Account implements Component<EntityStore> {
     public Account(Account clone) {
         this.balance = clone.balance;
     }
-    public double getBalance() {
+    public double get() {
         return this.balance;
     }
     public boolean has(double amount) {

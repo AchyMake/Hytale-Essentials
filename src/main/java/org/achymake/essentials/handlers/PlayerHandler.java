@@ -1,15 +1,10 @@
 package org.achymake.essentials.handlers;
 
-import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.server.core.entity.nameplate.Nameplate;
 import com.hypixel.hytale.server.core.permissions.PermissionsModule;
-import com.hypixel.hytale.server.core.universe.Universe;
-import org.achymake.essentials.components.Account;
-import org.achymake.essentials.components.Death;
-import org.achymake.essentials.components.Homes;
-import org.achymake.essentials.files.*;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import org.achymake.essentials.Essentials;
+import org.achymake.essentials.files.EssentialsConfig;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,6 +18,9 @@ public class PlayerHandler {
     }
     private FileHandler getFileHandler() {
         return getInstance().getFileHandler();
+    }
+    private UniverseHandler getUniverseHandler() {
+        return getInstance().getUniverseHandler();
     }
     public int getMaxHomes(PlayerRef playerRef) {
         var listed = new ArrayList<Integer>();
@@ -50,7 +48,7 @@ public class PlayerHandler {
         return getPVP().contains(playerRef);
     }
     public String getUsername(UUID uuid) {
-        var loaded = Universe.get().getPlayerStorage().load(uuid);
+        var loaded = getUniverseHandler().getPlayerStorage().load(uuid);
         try {
             var holder = loaded.get();
             var namePlate = holder.getComponent(Nameplate.getComponentType());
@@ -59,33 +57,6 @@ public class PlayerHandler {
             } else return null;
         } catch (InterruptedException | ExecutionException e) {
             return null;
-        }
-    }
-    public boolean hasJoined(UUID uuid) {
-        var loaded = Universe.get().getPlayerStorage().load(uuid);
-        try {
-            return loaded.get().getComponent(getInstance().getAccountComponentType()) != null;
-        } catch (InterruptedException | ExecutionException e) {
-            return false;
-        }
-    }
-    public void setup(UUID uuid) {
-        var loaded = Universe.get().getPlayerStorage().load(uuid);
-        var username = getUsername(uuid);
-        try {
-            var holder = loaded.get();
-            if (holder.getComponent(getInstance().getAccountComponentType()) == null) {
-                holder.addComponent(getInstance().getAccountComponentType(), new Account());
-            }
-            if (holder.getComponent(getInstance().getDeathComponentType()) == null) {
-                holder.addComponent(getInstance().getDeathComponentType(), new Death());
-            }
-            if (holder.getComponent(getInstance().getHomesComponentType()) == null) {
-                holder.addComponent(getInstance().getHomesComponentType(), new Homes());
-            }
-            HytaleLogger.getLogger().atInfo().log(username + " has been setup");
-        } catch (InterruptedException | ExecutionException e) {
-            HytaleLogger.getLogger().atInfo().log(username + " failed to setup");
         }
     }
     public ArrayList<PlayerRef> getPVP() {

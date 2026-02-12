@@ -8,6 +8,7 @@ import com.hypixel.hytale.server.core.modules.entity.teleport.Teleport;
 import com.hypixel.hytale.server.core.permissions.PermissionsModule;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
+import com.hypixel.hytale.server.core.universe.playerdata.PlayerStorage;
 import com.hypixel.hytale.server.core.universe.world.SoundUtil;
 import com.hypixel.hytale.server.core.universe.world.World;
 import org.achymake.essentials.Essentials;
@@ -41,27 +42,11 @@ public class UniverseHandler {
     public World getWorld(UUID uuid) {
         return getUniverse().getWorld(uuid);
     }
-    public void playSound(PlayerRef playerRef, String soundName, float volume, float pitch) {
-        var sound = SoundEvent.getAssetMap().getIndex(soundName);
-        assert playerRef.getWorldUuid() != null;
-        getScheduleHandler().schedule(() -> {
-            Objects.requireNonNull(getUniverse().getWorld(playerRef.getWorldUuid())).execute(() -> SoundUtil.playSoundEvent2dToPlayer(playerRef, sound, SoundCategory.UI, volume, pitch));
-        }, 100, TimeUnit.MILLISECONDS);
-    }
-    public void playSound(PlayerRef playerRef, String soundName) {
-        var sound = SoundEvent.getAssetMap().getIndex(soundName);
-        assert playerRef.getWorldUuid() != null;
-        getScheduleHandler().schedule(() -> {
-            Objects.requireNonNull(getUniverse().getWorld(playerRef.getWorldUuid())).execute(() -> SoundUtil.playSoundEvent2dToPlayer(playerRef, sound, SoundCategory.UI));
-        }, 100, TimeUnit.MILLISECONDS);
-    }
-    public void playSound(World world, Vector3d position, String soundName) {
-        var sound = SoundEvent.getAssetMap().getIndex(soundName);
-        var store = world.getEntityStore().getStore();
-        getScheduleHandler().schedule(() -> world.execute(() -> SoundUtil.playSoundEvent3d(sound, SoundCategory.UI, position, store)), 100, TimeUnit.MILLISECONDS);
-    }
     public Collection<PlayerRef> getPlayers() {
         return getUniverse().getPlayers();
+    }
+    public PlayerStorage getPlayerStorage() {
+        return getUniverse().getPlayerStorage();
     }
     public void sendAll(Message message) {
         getUniverse().sendMessage(message);
@@ -94,5 +79,24 @@ public class UniverseHandler {
                 return Teleport.createForPlayer(world, spawnProvider.getSpawnPoint(world, worldUUID));
             } else return null;
         } else return null;
+    }
+    public void playSound(PlayerRef playerRef, String soundName, float volume, float pitch) {
+        var sound = SoundEvent.getAssetMap().getIndex(soundName);
+        assert playerRef.getWorldUuid() != null;
+        getScheduleHandler().schedule(() -> {
+            Objects.requireNonNull(getUniverse().getWorld(playerRef.getWorldUuid())).execute(() -> SoundUtil.playSoundEvent2dToPlayer(playerRef, sound, SoundCategory.UI, volume, pitch));
+        }, 100, TimeUnit.MILLISECONDS);
+    }
+    public void playSound(PlayerRef playerRef, String soundName) {
+        var sound = SoundEvent.getAssetMap().getIndex(soundName);
+        assert playerRef.getWorldUuid() != null;
+        getScheduleHandler().schedule(() -> {
+            Objects.requireNonNull(getUniverse().getWorld(playerRef.getWorldUuid())).execute(() -> SoundUtil.playSoundEvent2dToPlayer(playerRef, sound, SoundCategory.UI));
+        }, 100, TimeUnit.MILLISECONDS);
+    }
+    public void playSound(World world, Vector3d position, String soundName) {
+        var sound = SoundEvent.getAssetMap().getIndex(soundName);
+        var store = world.getEntityStore().getStore();
+        getScheduleHandler().schedule(() -> world.execute(() -> SoundUtil.playSoundEvent3d(sound, SoundCategory.UI, position, store)), 100, TimeUnit.MILLISECONDS);
     }
 }

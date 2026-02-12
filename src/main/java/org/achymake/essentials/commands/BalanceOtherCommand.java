@@ -28,18 +28,10 @@ public class BalanceOtherCommand extends CommandBase {
     @Override
     protected void executeSync(@NonNullDecl CommandContext commandContext) {
         var targetRef = this.targetRef.get(commandContext);
-        if (targetRef != null && targetRef.isValid()) {
-            var holder = targetRef.getHolder();
-            if (holder != null) {
-                var account = holder.getComponent(getInstance().getAccountComponentType());
-                if (account != null) {
-                    commandContext.sendMessage(Message.join(
-                            Message.raw(targetRef.getUsername() + " "),
-                            Message.raw("has ").color(Color.ORANGE),
-                            Message.raw(getEconomyHandler().format(account.getBalance()))
-                    ));
-                }
-            }
-        }
+        commandContext.sendMessage(Message.join(
+                Message.raw(targetRef.getUsername() + " "),
+                Message.raw("has ").color(Color.ORANGE),
+                Message.raw(getEconomyHandler().format(getEconomyHandler().get(targetRef)))
+        ));
     }
 }
