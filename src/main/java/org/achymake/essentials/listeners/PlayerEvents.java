@@ -38,8 +38,9 @@ public class PlayerEvents {
         event.setContent(getMessageHandler().censor(event.getContent()));
     }
     public static void onPlayerConnect(PlayerConnectEvent event) {
-        var username = event.getPlayerRef().getUsername();
-        var uuid = event.getPlayerRef().getUuid();
+        var playerRef = event.getPlayerRef();
+        var username = playerRef.getUsername();
+        var uuid = playerRef.getUuid();
         if (PermissionsModule.get().hasPermission(uuid, "essentials.event.join.message")) {
             var hiddenManager = new HiddenPlayersManager();
             if (hiddenManager.isPlayerHidden(uuid))return;
@@ -55,8 +56,9 @@ public class PlayerEvents {
                 "essentials.event.join.notify");
     }
     public static void onPlayerDisconnect(PlayerDisconnectEvent event) {
-        var username = event.getPlayerRef().getUsername();
-        var uuid = event.getPlayerRef().getUuid();
+        var playerRef = event.getPlayerRef();
+        var username = playerRef.getUsername();
+        var uuid = playerRef.getUuid();
         if (PermissionsModule.get().hasPermission(uuid, "essentials.event.quit.message")) {
             var hiddenManager = new HiddenPlayersManager();
             if (hiddenManager.isPlayerHidden(uuid))return;

@@ -65,6 +65,13 @@ public class TeleportHandler {
         playerRef.sendMessage(message);
         world.execute(() -> store.addComponent(ref, Teleport.getComponentType(), teleport));
     }
+    public void teleport(PlayerRef playerRef, Teleport teleport) {
+        var ref = playerRef.getReference();
+        if (ref == null)return;
+        var store = ref.getStore();
+        var world = store.getExternalData().getWorld();
+        world.execute(() -> store.addComponent(ref, Teleport.getComponentType(), teleport));
+    }
     public void cancel(PlayerRef playerRef) {
         if (getTpScheduled().containsKey(playerRef)) {
             var scheduledTask = getTPScheduled(playerRef);

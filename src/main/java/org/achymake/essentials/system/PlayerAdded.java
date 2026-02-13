@@ -4,7 +4,6 @@ import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.RefSystem;
 import com.hypixel.hytale.logger.HytaleLogger;
-import com.hypixel.hytale.server.core.entity.nameplate.Nameplate;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.achymake.essentials.Essentials;
@@ -23,7 +22,11 @@ public class PlayerAdded extends RefSystem<EntityStore> {
                               @NonNullDecl AddReason addReason,
                               @NonNullDecl Store<EntityStore> store,
                               @NonNullDecl CommandBuffer<EntityStore> commandBuffer) {
-        var username = commandBuffer.getComponent(ref, Nameplate.getComponentType()).getText();
+        var playerRef = store.getComponent(ref, PlayerRef.getComponentType());
+        String username = "";
+        if (playerRef != null) {
+            username = playerRef.getUsername();
+        }
         if (commandBuffer.getComponent(ref, getInstance().getAccountComponentType()) == null) {
             commandBuffer.addComponent(ref, getInstance().getAccountComponentType(), new Account());
             HytaleLogger.getLogger().atInfo().log(username + " Account Component Added");
@@ -42,6 +45,12 @@ public class PlayerAdded extends RefSystem<EntityStore> {
                                @NonNullDecl RemoveReason removeReason,
                                @NonNullDecl Store<EntityStore> store,
                                @NonNullDecl CommandBuffer<EntityStore> commandBuffer) {
+        var playerRef = commandBuffer.getComponent(ref, PlayerRef.getComponentType());
+        if (playerRef != null) {
+            var packetHandler = playerRef.getPacketHandler();
+            packetHandler.setQueuePackets(false);
+            packetHandler.tryFlush();
+        }
     }
     @NullableDecl
     @Override

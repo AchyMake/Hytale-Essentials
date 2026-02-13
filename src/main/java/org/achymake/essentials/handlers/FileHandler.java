@@ -40,14 +40,14 @@ public class FileHandler {
     }
     private void createConfig() {
         if (getFile("mods/Essentials/config.json").exists())return;
-        var maxHomes = new HashMap<String, Integer>();
-        maxHomes.put("default", 3);
-        maxHomes.put("vip", 6);
         var censored = new ArrayList<String>();
         censored.add("fuck");
         censored.add("pussy");
         censored.add("nigger");
         censored.add("nigga");
+        var maxHomes = new HashMap<String, Integer>();
+        maxHomes.put("default", 3);
+        maxHomes.put("vip", 6);
         try (var writer = getFileWriter("mods/Essentials/config.json")) {
             getGson().toJson(new EssentialsConfig("default", "https://store.yourStore.org/", censored, "#,##0", "$", true, maxHomes), writer);
         } catch (IOException e) {

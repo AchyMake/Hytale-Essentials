@@ -1,5 +1,6 @@
 package org.achymake.essentials.handlers;
 
+import com.hypixel.hytale.math.vector.Transform;
 import com.hypixel.hytale.math.vector.Vector3d;
 import com.hypixel.hytale.protocol.SoundCategory;
 import com.hypixel.hytale.server.core.Message;
@@ -69,14 +70,16 @@ public class UniverseHandler {
             return null;
         }
     }
+    public Transform getSpawnPoint() {
+        return getSpawnWorld().getWorldConfig().getSpawnProvider().getSpawnPoint(getSpawnWorld(), getSpawnWorld().getWorldConfig().getUuid());
+    }
     public Teleport getSpawn() {
         var world = getSpawnWorld();
         if (world != null) {
             var worldConfig = world.getWorldConfig();
             var spawnProvider = worldConfig.getSpawnProvider();
             if (spawnProvider != null) {
-                var worldUUID = worldConfig.getUuid();
-                return Teleport.createForPlayer(world, spawnProvider.getSpawnPoint(world, worldUUID));
+                return Teleport.createForPlayer(world, getSpawnPoint());
             } else return null;
         } else return null;
     }
